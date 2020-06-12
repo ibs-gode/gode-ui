@@ -1,5 +1,6 @@
 import React from 'react';
 import Notifications from "react-notify-toast";
+import EntityDesign from './entity-design'
 
 export default class HomePage extends React.Component {
 
@@ -21,9 +22,9 @@ export default class HomePage extends React.Component {
                         <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
                              data-parent="#accordion">
                             <div className="card-body">
-                                <form>
 
-                                </form>
+                                    <EntityDesign></EntityDesign>
+
                             </div>
                         </div>
                     </div>
