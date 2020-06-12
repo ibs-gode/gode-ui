@@ -21,6 +21,7 @@ const App = () => {
                 </div>
                 <div className="container-lg py-4 my-3 bg-white border rounded">
                     <HomePage></HomePage>
+                    <MainFormComponent></MainFormComponent>
                 </div>
             </div>
         </div>

@@ -2,6 +2,19 @@ import React from 'react';
 
 export default class EntityObject extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            entity: this.props.entity
+        };
+    }
+
+    handleAddObjectFieldClick(e){
+        //e.preventDefault();
+
+
+    }
+
     render() {
         return (
             <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded"
@@ -21,18 +34,8 @@ export default class EntityObject extends React.Component {
                     </div>
                     <div>
                         <label htmlFor="type-object">Field Details</label>
-                        <button type="button" className="btn btn-dark btn-sm ml-3">+</button>
                         <fieldset className="form-group border  pl-3 pt-3 pr-3 mr-3 mt-2 rounded"
                                   id="type-object">
-                            <table className="table table-striped ">
-                                {/*<thead>*/}
-                                {/*<tr>*/}
-                                {/*    <th className="font-weight-light" scope="col">Name</th>*/}
-                                {/*    <th className="font-weight-light" scope="col">Description</th>*/}
-                                {/*    <th className="font-weight-light" scope="col">Type</th>*/}
-                                {/*</tr>*/}
-                                {/*</thead>*/}
-                                <tbody>
                                 <input type="text" className="form-control-sm ml-5 mr-5 border"
                                        id="field-name"
                                        placeholder="Field Name"/>
@@ -53,7 +56,17 @@ export default class EntityObject extends React.Component {
                                     <option value="HIGH_PRECISION_DECIMAL">High Precision Decimal
                                     </option>
                                 </select>
-                                </tbody>
+                                <button type="button" className="btn btn-dark btn-sm ml-3" onClick={this.handleAddObjectFieldClick}>+</button>
+
+                            <table className="table table-striped mt-3 form-control-sm" >
+                                <thead>
+                                <tr>
+                                    <th className="font-weight-light">Name</th>
+                                    <th className="font-weight-light">Description</th>
+                                    <th className="font-weight-light">Type</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
                             </table>
                         </fieldset>
                     </div>
