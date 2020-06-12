@@ -2,11 +2,10 @@ import React from 'react';
 import EntityRelationship from "./entity-relationship";
 import EntityObject from "./entity-object";
 
-export default class EntityField extends React.Component {
-    render() {
+const EntityField = (props) => {
         return (
 
-            <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" id={this.props.id}>
+            <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" id={props.id}>
                 <div className="form-row">
                     <div className="form-group col-md-4">
                         <label htmlFor="idfield-name">Name</label>
@@ -71,5 +70,6 @@ export default class EntityField extends React.Component {
             </fieldset>
 
         );
-    }
-}
+    };
+
+export default EntityField;

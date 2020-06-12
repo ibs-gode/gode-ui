@@ -1,8 +1,8 @@
 import React from 'react';
 import EntityField from "../components/entity-field";
 
-export default class EntityDesign extends React.Component {
-    render() {
+const EntityDesign  = () => {
+
         return (
 
             <form>
@@ -43,6 +43,6 @@ export default class EntityDesign extends React.Component {
 
             </form>
         );
-    }
+    };
 
-}
+export default EntityDesign;

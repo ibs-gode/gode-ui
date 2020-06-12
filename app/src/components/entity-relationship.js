@@ -1,8 +1,7 @@
 import React from 'react';
 
-export default class EntityRelationship extends React.Component {
+const EntityRelationship = () => {
 
-    render() {
         return (
             <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded"
                       id="type-relationship">
@@ -35,5 +34,6 @@ export default class EntityRelationship extends React.Component {
 
             </fieldset>
         );
-    }
-}
+    };
+
+export default EntityRelationship;

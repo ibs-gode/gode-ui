@@ -2,9 +2,8 @@ import React from 'react';
 import Notifications from "react-notify-toast";
 import EntityDesign from './entity-design'
 
-export default class HomePage extends React.Component {
+const HomePage = () => {
 
-    render() {
         return (
             <div>
                 <Notifications/>
@@ -108,6 +107,8 @@ export default class HomePage extends React.Component {
 
             </div>
         );
-    }
 
-}
+
+};
+
+export default HomePage;

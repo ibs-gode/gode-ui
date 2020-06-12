@@ -1,21 +1,7 @@
 import React from 'react';
 
-export default class EntityObject extends React.Component {
+const EntityObject = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            entity: this.props.entity
-        };
-    }
-
-    handleAddObjectFieldClick(e){
-        //e.preventDefault();
-
-
-    }
-
-    render() {
         return (
             <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded"
                       id="type-object">
@@ -56,7 +42,7 @@ export default class EntityObject extends React.Component {
                                     <option value="HIGH_PRECISION_DECIMAL">High Precision Decimal
                                     </option>
                                 </select>
-                                <button type="button" className="btn btn-dark btn-sm ml-3" onClick={this.handleAddObjectFieldClick}>+</button>
+                                <button type="button" className="btn btn-dark btn-sm ml-3" >+</button>
 
                             <table className="table table-striped mt-3 form-control-sm" >
                                 <thead>
@@ -76,5 +62,6 @@ export default class EntityObject extends React.Component {
 
             </fieldset>
         );
-    }
-}
+    };
+
+export default EntityObject;
