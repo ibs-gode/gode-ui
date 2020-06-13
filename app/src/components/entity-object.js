@@ -3,7 +3,7 @@ import {useInput} from "../hooks/input-hook";
 
 const EntityObject = () => {
 
-    const [entityItems, setEntityItems] = useState([]);
+    const [objectFieldItems, setObjectFieldItems] = useState([]);
     const {value: fieldName, bind: bindFieldName, reset: resetFieldName} = useInput('');
     const {value: fieldDesc, bind: bindFieldDesc, reset: resetFieldDesc} = useInput('');
     const {value: fieldType, bind: bindFieldType, reset: resetFieldType} = useInput('');
@@ -11,7 +11,7 @@ const EntityObject = () => {
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
-        setEntityItems([...entityItems, {
+        setObjectFieldItems([...objectFieldItems, {
             name: fieldName,
             desc: fieldDesc,
             type: fieldType
@@ -73,7 +73,7 @@ const EntityObject = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {entityItems.map((item) => {
+                            {objectFieldItems.map((item) => {
                                 return (
                                     <tr>
                                         <td className="font-weight-light">{item.name}</td>
