@@ -67,18 +67,18 @@ const EntityObject = () => {
                         <table className="table table-striped mt-3 form-control-sm">
                             <thead>
                             <tr>
-                                <th className="font-weight-light">Name</th>
-                                <th className="font-weight-light">Description</th>
-                                <th className="font-weight-light">Type</th>
+                                <th className="font-weight-normal">Name</th>
+                                <th className="font-weight-normal">Description</th>
+                                <th className="font-weight-normal">Type</th>
                             </tr>
                             </thead>
                             <tbody>
                             {entityItems.map((item) => {
                                 return (
                                     <tr>
-                                        <td>{item.name}</td>
-                                        <td>{item.desc}</td>
-                                        <td>{item.type}</td>
+                                        <td className="font-weight-light">{item.name}</td>
+                                        <td className="font-weight-light">{item.desc}</td>
+                                        <td className="font-weight-light">{item.type}</td>
                                     </tr>
                                 )
                             })}
@@ -86,10 +86,7 @@ const EntityObject = () => {
                         </table>
                     </fieldset>
                 </div>
-
-
             </div>
-
         </fieldset>
     );
 };
