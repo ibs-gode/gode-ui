@@ -7,7 +7,7 @@ const EntityDesign = () => {
 
         <form>
 
-            <div class="form-row ">
+            <div className="form-row ">
                 <div className="form-group col-md-6">
                     <label htmlFor="entity-name">Name</label>
                     <input type="text" className="form-control" id="entity-name" placeholder="Entity Name"/>

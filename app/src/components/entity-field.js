@@ -70,10 +70,10 @@ const EntityField = (props) => {
 
     return (
         <div>
-            <form onSubmit={handleAddFieldSubmit}>
+            <div>
                 <label htmlFor="entity-field">{props.label}</label>
                 {props.showAddButton &&
-                <button type="submit" className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add Field</button>}
+                <button type="submit" onClick={handleAddFieldSubmit} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add Field</button>}
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" id={props.id}>
                     <div className="form-row">
                         <div className="form-group col-md-4">
@@ -113,7 +113,7 @@ const EntityField = (props) => {
                             <label htmlFor="idfield-type">Type</label>
                             <select className="form-control" id="idfield-type" value={fieldType}
                                     onChange={displayObject}>
-                                <option value="" selected hidden>Type</option>
+                                <option value="" hidden>Type</option>
                                 <option value="TEXT">Text</option>
                                 <option value="OBJECT">Object</option>
                                 <option value="BOOLEAN">Boolean</option>
@@ -140,7 +140,7 @@ const EntityField = (props) => {
                     </div>}
 
                 </fieldset>
-            </form>
+            </div>
             {props.showAddButton &&
             <table className="table table-info table-striped mt-3 ">
                 <thead>
@@ -159,9 +159,11 @@ const EntityField = (props) => {
                             <td className="font-weight-light">{item.desc}</td>
                             {/*<td className="font-weight-light">{item.property1 + '  '} {item.property2} {item.property3}</td>*/}
                             <td><table className="font-weight-light small">
+                                <tbody>
                                 <tr>{item.property1}</tr>
                                 <tr>{item.property2}</tr>
                                 <tr>{item.property3}</tr>
+                                </tbody>
                             </table></td>
 
                             <td className="font-weight-light">{item.type}</td>
