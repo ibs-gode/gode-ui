@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import EntityRelationship from "./entity-relationship";
 import EntityObject from "./entity-object";
 import {useInput} from "../hooks/input-hook";
 
 const EntityField = (props) => {
 
+    const refProp1 = useRef();
+    const refProp2 = useRef();
+    const refProp3 = useRef();
     const [showObject, setShowObject] = useState(false);
     const [showRelationship, setShowRelationship] = useState(false);
     const [fieldItems, setFieldItems] = useState([]);
@@ -28,7 +31,14 @@ const EntityField = (props) => {
         }]);
         resetEntityFieldName();
         resetEntityFieldDesc();
-        setFieldType('')
+        setFieldType('');
+        setEntityFieldProp1('');
+        setEntityFieldProp2('');
+        setEntityFieldProp3('');
+        refProp1.current.checked = false;
+        refProp2.current.checked = false;
+        refProp3.current.checked = false;
+
     }
 
     const displayObject = (e) => {
@@ -81,17 +91,17 @@ const EntityField = (props) => {
                             <label htmlFor="idfield-properties">Properties</label>
                             <div className="form-group">
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="checkbox" id="properties-index"
+                                    <input className="form-check-input" type="checkbox"  ref={refProp1}
                                            value="Index" onClick={e => handleProperty(e, "Index")}/>
                                     <label className="form-check-label" htmlFor="properties-index">Index</label>
                                 </div>
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="checkbox" id="properties-unique"
+                                    <input className="form-check-input" type="checkbox" ref={refProp2}
                                            value="Unique" onClick={e => handleProperty(e, "Unique")}/>
                                     <label className="form-check-label" htmlFor="properties-unique">Unique</label>
                                 </div>
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="checkbox" id="properties-mandatory"
+                                    <input className="form-check-input" type="checkbox" ref={refProp3}
                                            value="Mandatory" onClick={e => handleProperty(e, "Mandatory")}/>
                                     <label className="form-check-label"
                                            htmlFor="properties-mandatory">Mandatory</label>
@@ -132,13 +142,13 @@ const EntityField = (props) => {
                 </fieldset>
             </form>
             {props.showAddButton &&
-            <table className="table table-striped mt-3 ">
+            <table className="table table-info table-striped mt-3 ">
                 <thead>
                 <tr>
-                    <th className="font-weight-normal">Name</th>
-                    <th className="font-weight-normal">Description</th>
-                    <th className="font-weight-normal">Properties</th>
-                    <th className="font-weight-normal">Type</th>
+                    <th className="font-weight-bold">Name</th>
+                    <th className="font-weight-bold">Description</th>
+                    <th className="font-weight-bold">Properties</th>
+                    <th className="font-weight-bold">Type</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -147,7 +157,13 @@ const EntityField = (props) => {
                         <tr key={idx}>
                             <td className="font-weight-light">{item.name}</td>
                             <td className="font-weight-light">{item.desc}</td>
-                            <td className="font-weight-light">{item.property1 + '  '} {item.property2} {item.property3}</td>
+                            {/*<td className="font-weight-light">{item.property1 + '  '} {item.property2} {item.property3}</td>*/}
+                            <td><table className="font-weight-light small">
+                                <tr>{item.property1}</tr>
+                                <tr>{item.property2}</tr>
+                                <tr>{item.property3}</tr>
+                            </table></td>
+
                             <td className="font-weight-light">{item.type}</td>
                         </tr>
                     )
