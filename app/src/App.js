@@ -16,7 +16,7 @@ const App = () => {
                         </header>
                     </div>
                 </div>
-                <div className="container-lg py-4 my-3 bg-white border rounded">
+                <div className="container py-4 my-3 bg-white border rounded">
                     <HomePage></HomePage>
                     {/*<MainFormComponent></MainFormComponent>*/}
                 </div>

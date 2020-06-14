@@ -11,7 +11,7 @@ const HomePage = () => {
                 <div id="accordion">
                     <div className="card">
                         <div className="card-header home-colour">
-                            <ul className="nav nav-tabs card-header-tabs" id="gode-header" >
+                            <ul className="nav nav-tabs card-header-tabs App-link font-weight-bolder font-italic" id="gode-header" >
                                 <li className="nav-item">
                                     <a className="nav-link active" href="#entity-design" data-toggle="tab"
                                        aria-controls="entity-design" aria-selected="true">Entity Design</a>

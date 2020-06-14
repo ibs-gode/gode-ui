@@ -142,8 +142,8 @@ const EntityField = (props) => {
                 </fieldset>
             </div>
             {props.showAddButton &&
-            <table className="table table-info table-striped mt-3 ">
-                <thead>
+            <table className="table mt-3 border border-info table-striped">
+                <thead className="table-info">
                 <tr>
                     <th className="font-weight-bold">Name</th>
                     <th className="font-weight-bold">Description</th>
