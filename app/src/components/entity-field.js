@@ -8,6 +8,7 @@ const EntityField = (props) => {
     const refProp1 = useRef();
     const refProp2 = useRef();
     const refProp3 = useRef();
+    const fieldRef = useRef();
     const [showObject, setShowObject] = useState(false);
     const [showRelationship, setShowRelationship] = useState(false);
     const [fieldItems, setFieldItems] = useState([]);
@@ -17,6 +18,21 @@ const EntityField = (props) => {
     const {value: entityFieldProp2, setValue: setEntityFieldProp2} = useInput('');
     const {value: entityFieldProp3, setValue: setEntityFieldProp3} = useInput('');
     const [fieldType, setFieldType] = useState('');
+
+
+    const saveEntityField = (e) => {
+        e.preventDefault();
+        const data = {
+            idField: {
+                description: entityFieldDesc,
+                name: entityFieldName
+            }
+        };
+        props.callbackFromEntity(data)
+        fieldRef.current.disabled = true;
+
+
+    };
 
     const handleAddFieldSubmit = (evt) => {
         evt.preventDefault();
@@ -39,7 +55,7 @@ const EntityField = (props) => {
         refProp2.current.checked = false;
         refProp3.current.checked = false;
 
-    }
+    };
 
     const displayObject = (e) => {
         e.preventDefault();
@@ -54,7 +70,7 @@ const EntityField = (props) => {
             setShowRelationship(false);
         }
         setFieldType(e.target.value)
-    }
+    };
 
     const handleProperty = (e, str) => {
         if (e.target.checked === true) {
@@ -74,7 +90,8 @@ const EntityField = (props) => {
                 <label htmlFor="entity-field">{props.label}</label>
                 {props.showAddButton &&
                 <button type="submit" onClick={handleAddFieldSubmit} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add Field</button>}
-                <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" id={props.id}>
+                {!props.showAddButton && <button type="submit" onClick={saveEntityField} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Save</button>}
+                <fieldset ref={fieldRef} className="form-group border border-secondary pl-3 pt-3 rounded">
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label htmlFor="idfield-name">Name</label>

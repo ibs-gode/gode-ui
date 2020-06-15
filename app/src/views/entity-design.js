@@ -1,12 +1,120 @@
-import React from 'react';
+import React, {useState} from 'react';
 import EntityField from "../components/entity-field";
 
 const EntityDesign = () => {
 
+    // const [entityDesignForm , setEntityDesignForm] = useState({
+    //     context: {
+    //         handle: 'string'
+    //     },
+    //     data: {
+    //         artifactId: '',
+    //         description: '',
+    //         fields: [
+    //             {
+    //                 description: '',
+    //                 name: '',
+    //                 objectType: {
+    //                     description: '',
+    //                     fields: [
+    //                         {
+    //                             description: '',
+    //                             name: '',
+    //                             type: ''
+    //                         }
+    //                     ],
+    //                     name: ''
+    //                 },
+    //                 properties: [],
+    //                 relationship: {
+    //                     artifactId: '',
+    //                     description: '',
+    //                     name: '',
+    //                     version: ''
+    //                 },
+    //                 type: ''
+    //             }
+    //         ],
+    //         idField: {
+    //             description: '',
+    //             name: '',
+    //             objectType: {
+    //                 description: '',
+    //                 fields: [
+    //                     {
+    //                         description: '',
+    //                         name: '',
+    //                         type: ''
+    //                     }
+    //                 ],
+    //                 name: ''
+    //             },
+    //             properties: [],
+    //             relationship: {
+    //                 artifactId: '',
+    //                 description: '',
+    //                 name: '',
+    //                 version: ''
+    //             },
+    //             type: ''
+    //         },
+    //         name: '',
+    //         state: {
+    //             entityStateStore: {
+    //                 asyncStoreSync: '',
+    //                 cached: '',
+    //                 storeName: ''
+    //             },
+    //             opsLevel: {
+    //                 asyncRead: '',
+    //                 read: '',
+    //                 relativeRead: '',
+    //                 transactional: '',
+    //                 write: ''
+    //             },
+    //             volatileEntity: ''
+    //         },
+    //         version: ''
+    //     }
+    // });
+    // const [entityField, setEntityField] = useState({
+    //     idField: {
+    //         description: '',
+    //         name: '',
+    //         objectType: {
+    //             description: '',
+    //             fields: [
+    //                 {
+    //                     description: '',
+    //                     name: '',
+    //                     type: ''
+    //                 }
+    //             ],
+    //             name: ''
+    //         },
+    //         properties: [],
+    //         relationship: {
+    //             artifactId: '',
+    //             description: '',
+    //             name: '',
+    //             version: ''
+    //         },
+    //         type: ''
+    //     }
+    // });
+    const [entityFieldObj, setEntityFieldObj] = useState({});
+
+    const displayResult = () => {
+        //console.log(JSON.stringify(entityField))
+    }
+
+    const entityFieldCallback = (dataFromEntityDesign) => {
+        setEntityFieldObj(dataFromEntityDesign);
+        console.log(JSON.stringify(dataFromEntityDesign))
+    };
+
     return (
-
         <form>
-
             <div className="form-row ">
                 <div className="form-group col-md-6">
                     <label htmlFor="entity-name">Name</label>
@@ -30,14 +138,14 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityField showAddButton={false} label="ID Field" id="entity-id-field"></EntityField>
+                <EntityField showAddButton={false} label="ID Field"  callbackFromEntity={entityFieldCallback}></EntityField>
             </div>
 
 
-            <EntityField  showAddButton={true} label="Field" id="entity-field"></EntityField>
+            <EntityField  showAddButton={true} label="Field"></EntityField>
 
 
-            <button type="button" className="btn btn-primary btn-lg float-right mb-3">Create</button>
+            <button type="button" onClick={displayResult} className="btn btn-primary  float-right mb-3">Create Entity</button>
 
         </form>
     );
