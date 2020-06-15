@@ -8,7 +8,7 @@ const EntityField = (props) => {
     const refProp1 = useRef();
     const refProp2 = useRef();
     const refProp3 = useRef();
-    const fieldRef = useRef();
+    const refPropID = useRef();
     const [showObject, setShowObject] = useState(false);
     const [showRelationship, setShowRelationship] = useState(false);
     const [fieldItems, setFieldItems] = useState([]);
@@ -17,21 +17,19 @@ const EntityField = (props) => {
     const {value: entityFieldProp1, setValue: setEntityFieldProp1} = useInput('');
     const {value: entityFieldProp2, setValue: setEntityFieldProp2} = useInput('');
     const {value: entityFieldProp3, setValue: setEntityFieldProp3} = useInput('');
+    const {value: entityFieldIDProp, setValue: setEntityFieldIDProp} = useInput('');
     const [fieldType, setFieldType] = useState('');
 
 
     const saveEntityField = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         const data = {
             idField: {
                 description: entityFieldDesc,
                 name: entityFieldName
             }
         };
-        props.callbackFromEntity(data)
-        fieldRef.current.disabled = true;
-
-
+        props.callbackFromEntity(data);
     };
 
     const handleAddFieldSubmit = (evt) => {
@@ -43,17 +41,23 @@ const EntityField = (props) => {
             property1: entityFieldProp1,
             property2: entityFieldProp2,
             property3: entityFieldProp3,
+            idFieldProp: entityFieldIDProp,
             type: fieldType
         }]);
+        saveEntityField(evt);
         resetEntityFieldName();
         resetEntityFieldDesc();
         setFieldType('');
         setEntityFieldProp1('');
         setEntityFieldProp2('');
         setEntityFieldProp3('');
+        setEntityFieldIDProp('')
         refProp1.current.checked = false;
         refProp2.current.checked = false;
         refProp3.current.checked = false;
+        refPropID.current.checked = false;
+
+
 
     };
 
@@ -80,18 +84,18 @@ const EntityField = (props) => {
                 setEntityFieldProp2(str)
             } else if (str === "Mandatory") {
                 setEntityFieldProp3(str)
+            } else if (str==="ID"){
+                setEntityFieldIDProp(str)
             }
         }
-    }
+    };
 
     return (
         <div>
             <div>
-                <label htmlFor="entity-field">{props.label}</label>
-                {props.showAddButton &&
-                <button type="submit" onClick={handleAddFieldSubmit} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add Field</button>}
-                {!props.showAddButton && <button type="submit" onClick={saveEntityField} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Save</button>}
-                <fieldset ref={fieldRef} className="form-group border border-secondary pl-3 pt-3 rounded">
+                <label htmlFor="entity-field">Fields</label>
+                <button type="submit" onClick={handleAddFieldSubmit} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add Field</button>
+                <fieldset className="form-group border border-secondary pl-3 pt-3 rounded">
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label htmlFor="idfield-name">Name</label>
@@ -108,20 +112,24 @@ const EntityField = (props) => {
                             <label htmlFor="idfield-properties">Properties</label>
                             <div className="form-group">
                                 <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="checkbox"  ref={refPropID}
+                                           value="ID" onClick={e => handleProperty(e, "ID")}/>
+                                    <label className="form-check-label">ID</label>
+                                </div>
+                                <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox"  ref={refProp1}
                                            value="Index" onClick={e => handleProperty(e, "Index")}/>
-                                    <label className="form-check-label" htmlFor="properties-index">Index</label>
+                                    <label className="form-check-label">Index</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" ref={refProp2}
                                            value="Unique" onClick={e => handleProperty(e, "Unique")}/>
-                                    <label className="form-check-label" htmlFor="properties-unique">Unique</label>
+                                    <label className="form-check-label">Unique</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" ref={refProp3}
                                            value="Mandatory" onClick={e => handleProperty(e, "Mandatory")}/>
-                                    <label className="form-check-label"
-                                           htmlFor="properties-mandatory">Mandatory</label>
+                                    <label className="form-check-label">Mandatory</label>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +166,6 @@ const EntityField = (props) => {
 
                 </fieldset>
             </div>
-            {props.showAddButton &&
             <table className="table mt-3 border border-info table-striped">
                 <thead className="table-info">
                 <tr>
@@ -175,21 +182,19 @@ const EntityField = (props) => {
                             <td className="font-weight-light">{item.name}</td>
                             <td className="font-weight-light">{item.desc}</td>
                             {/*<td className="font-weight-light">{item.property1 + '  '} {item.property2} {item.property3}</td>*/}
-                            <td><table className="font-weight-light small">
-                                <tbody>
-                                <tr>{item.property1}</tr>
-                                <tr>{item.property2}</tr>
-                                <tr>{item.property3}</tr>
-                                </tbody>
-                            </table></td>
+                            <td className="font-weight-lighter small">
+                                {item.idFieldProp} &nbsp;
+                                {item.property1}&nbsp;
+                                {item.property2}&nbsp;
+                                {item.property3}&nbsp;
 
+                            </td>
                             <td className="font-weight-light">{item.type}</td>
                         </tr>
                     )
                 })}
                 </tbody>
             </table>
-            }
         </div>
 
     );

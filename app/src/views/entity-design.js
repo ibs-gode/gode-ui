@@ -102,15 +102,30 @@ const EntityDesign = () => {
     //         type: ''
     //     }
     // });
-    const [entityFieldObj, setEntityFieldObj] = useState({});
+    const [entityFieldObj, setEntityFieldObj] = useState({
+        idField: {
+            description: '',
+            name: ''
+        }});
 
     const displayResult = () => {
         //console.log(JSON.stringify(entityField))
+        console.log("nope"+JSON.stringify(entityFieldObj));
     }
 
     const entityFieldCallback = (dataFromEntityDesign) => {
+
+        // setEntityFieldObj(oldState => ({
+        //     idField: {
+        //         ...oldState.idField,
+        //         name : dataFromEntityDesign.idField.name,
+        //         description : dataFromEntityDesign.idField.description
+        //     }
+        // }));
+
         setEntityFieldObj(dataFromEntityDesign);
-        console.log(JSON.stringify(dataFromEntityDesign))
+        console.log(dataFromEntityDesign.idField.name);
+        console.log(JSON.stringify(entityFieldObj)); //will not work inside the method
     };
 
     return (
@@ -138,11 +153,8 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityField showAddButton={false} label="ID Field"  callbackFromEntity={entityFieldCallback}></EntityField>
+                <EntityField callbackFromEntity={entityFieldCallback}></EntityField>
             </div>
-
-
-            <EntityField  showAddButton={true} label="Field"></EntityField>
 
 
             <button type="button" onClick={displayResult} className="btn btn-primary  float-right mb-3">Create Entity</button>
