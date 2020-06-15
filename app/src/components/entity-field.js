@@ -16,6 +16,7 @@ const EntityField = (props) => {
     const {value: entityFieldDesc, bind: bindEntityFieldDesc, reset: resetEntityFieldDesc} = useInput('');
     const[entityFieldProp, setEntityFieldProp] = useState([])
     const [fieldType, setFieldType] = useState('');
+    const [relationshipObject, setRelationshipObject] = useState({});
 
 
     const saveEntityField = () => {
@@ -35,16 +36,17 @@ const EntityField = (props) => {
                 //     name: ''
                 // },
                 properties: entityFieldProp,
-                // relationship: {
-                //     artifactId: '',
-                //     description: '',
-                //     name: '',
-                //     version: ''
-                // },
+                relationship: relationshipObject,
                 type: fieldType
             }
         };
         props.callbackFromEntity(data);
+    };
+
+    const relationshipCallBack = (dataFromRelationship) => {
+        setRelationshipObject(dataFromRelationship);
+        console.log(dataFromRelationship.artifactId)
+        console.log(JSON.stringify(dataFromRelationship));
     };
 
     const handleAddFieldSubmit = (evt) => {
@@ -59,11 +61,13 @@ const EntityField = (props) => {
         resetEntityFieldName();
         resetEntityFieldDesc();
         setFieldType('');
-        setEntityFieldProp('');
+        setEntityFieldProp([]);
         refProp1.current.checked = false;
         refProp2.current.checked = false;
         refProp3.current.checked = false;
         refPropID.current.checked = false;
+        setShowRelationship(false)
+        setRelationshipObject({});
     };
 
     const displayObject = (e) => {
@@ -151,8 +155,7 @@ const EntityField = (props) => {
                     </div>
 
                     {showRelationship && <div>
-                        <label htmlFor="type-relationship">Relationship Details</label>
-                        <EntityRelationship></EntityRelationship>
+                        <EntityRelationship callbackFromEntityField={relationshipCallBack}></EntityRelationship>
                     </div>}
 
 

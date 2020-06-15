@@ -3,134 +3,12 @@ import EntityField from "../components/entity-field";
 
 const EntityDesign = () => {
 
-    // const [entityDesignForm , setEntityDesignForm] = useState({
-    //     context: {
-    //         handle: 'string'
-    //     },
-    //     data: {
-    //         artifactId: '',
-    //         description: '',
-    //         fields: [
-    //             {
-    //                 description: '',
-    //                 name: '',
-    //                 objectType: {
-    //                     description: '',
-    //                     fields: [
-    //                         {
-    //                             description: '',
-    //                             name: '',
-    //                             type: ''
-    //                         }
-    //                     ],
-    //                     name: ''
-    //                 },
-    //                 properties: [],
-    //                 relationship: {
-    //                     artifactId: '',
-    //                     description: '',
-    //                     name: '',
-    //                     version: ''
-    //                 },
-    //                 type: ''
-    //             }
-    //         ],
-    //         idField: {
-    //             description: '',
-    //             name: '',
-    //             objectType: {
-    //                 description: '',
-    //                 fields: [
-    //                     {
-    //                         description: '',
-    //                         name: '',
-    //                         type: ''
-    //                     }
-    //                 ],
-    //                 name: ''
-    //             },
-    //             properties: [],
-    //             relationship: {
-    //                 artifactId: '',
-    //                 description: '',
-    //                 name: '',
-    //                 version: ''
-    //             },
-    //             type: ''
-    //         },
-    //         name: '',
-    //         state: {
-    //             entityStateStore: {
-    //                 asyncStoreSync: '',
-    //                 cached: '',
-    //                 storeName: ''
-    //             },
-    //             opsLevel: {
-    //                 asyncRead: '',
-    //                 read: '',
-    //                 relativeRead: '',
-    //                 transactional: '',
-    //                 write: ''
-    //             },
-    //             volatileEntity: ''
-    //         },
-    //         version: ''
-    //     }
-    // });
-    // const [entityField, setEntityField] = useState({
-    //     idField: {
-    //         description: '',
-    //         name: '',
-    //         objectType: {
-    //             description: '',
-    //             fields: [
-    //                 {
-    //                     description: '',
-    //                     name: '',
-    //                     type: ''
-    //                 }
-    //             ],
-    //             name: ''
-    //         },
-    //         properties: [],
-    //         relationship: {
-    //             artifactId: '',
-    //             description: '',
-    //             name: '',
-    //             version: ''
-    //         },
-    //         type: ''
-    //     }
-    // });
-    const [entityFieldObj, setEntityFieldObj] = useState({
-        idField: {
-            description: '',
-            name: '',
-            objectType: {
-                description: '',
-                fields: [
-                    {
-                        description: '',
-                        name: '',
-                        type: ''
-                    }
-                ],
-                name: ''
-            },
-            properties: [],
-            relationship: {
-                artifactId: '',
-                description: '',
-                name: '',
-                version: ''
-            },
-            type: ''
-        }});
+    const [entityFieldObj, setEntityFieldObj] = useState({});
 
     const displayResult = () => {
-        //console.log(JSON.stringify(entityField))
         console.log(entityFieldObj.idField.name);
         console.log("nope"+JSON.stringify(entityFieldObj));
+        setEntityFieldObj({});
     }
 
     const entityFieldCallback = (dataFromEntityDesign) => {
@@ -145,7 +23,10 @@ const EntityDesign = () => {
 
         setEntityFieldObj(dataFromEntityDesign);
         console.log(dataFromEntityDesign.idField.name);
-        console.log(JSON.stringify(entityFieldObj)); //will not work inside the method
+        if(dataFromEntityDesign.idField.properties.includes("ID")){
+            console.log("ID is here")
+        }
+        //console.log(JSON.stringify(entityFieldObj)); //will not work inside the method
     };
 
     return (

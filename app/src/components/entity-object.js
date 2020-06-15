@@ -48,7 +48,7 @@ const EntityObject = () => {
                                    id="field-description"
                                    placeholder="Field Description" {...bindFieldDesc}/>
                             <select className="form-control-sm ml-5 mr-5 border" id="field-type" {...bindFieldType}>
-                                <option value="" selected hidden>Type</option>
+                                <option value="" hidden>Type</option>
                                 <option value="TEXT">Text</option>
                                 <option value="OBJECT">Object</option>
                                 <option value="BOOLEAN">Boolean</option>
