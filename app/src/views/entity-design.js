@@ -105,11 +105,31 @@ const EntityDesign = () => {
     const [entityFieldObj, setEntityFieldObj] = useState({
         idField: {
             description: '',
-            name: ''
+            name: '',
+            objectType: {
+                description: '',
+                fields: [
+                    {
+                        description: '',
+                        name: '',
+                        type: ''
+                    }
+                ],
+                name: ''
+            },
+            properties: [],
+            relationship: {
+                artifactId: '',
+                description: '',
+                name: '',
+                version: ''
+            },
+            type: ''
         }});
 
     const displayResult = () => {
         //console.log(JSON.stringify(entityField))
+        console.log(entityFieldObj.idField.name);
         console.log("nope"+JSON.stringify(entityFieldObj));
     }
 

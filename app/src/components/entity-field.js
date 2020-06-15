@@ -14,19 +14,34 @@ const EntityField = (props) => {
     const [fieldItems, setFieldItems] = useState([]);
     const {value: entityFieldName, bind: bindEntityFieldName, reset: resetEntityFieldName} = useInput('');
     const {value: entityFieldDesc, bind: bindEntityFieldDesc, reset: resetEntityFieldDesc} = useInput('');
-    const {value: entityFieldProp1, setValue: setEntityFieldProp1} = useInput('');
-    const {value: entityFieldProp2, setValue: setEntityFieldProp2} = useInput('');
-    const {value: entityFieldProp3, setValue: setEntityFieldProp3} = useInput('');
-    const {value: entityFieldIDProp, setValue: setEntityFieldIDProp} = useInput('');
+    const[entityFieldProp, setEntityFieldProp] = useState([])
     const [fieldType, setFieldType] = useState('');
 
 
-    const saveEntityField = (e) => {
-        //e.preventDefault();
+    const saveEntityField = () => {
         const data = {
             idField: {
                 description: entityFieldDesc,
-                name: entityFieldName
+                name: entityFieldName,
+                // objectType: {
+                //     description: '',
+                //     fields: [
+                //         {
+                //             description: '',
+                //             name: '',
+                //             type: ''
+                //         }
+                //     ],
+                //     name: ''
+                // },
+                properties: entityFieldProp,
+                // relationship: {
+                //     artifactId: '',
+                //     description: '',
+                //     name: '',
+                //     version: ''
+                // },
+                type: fieldType
             }
         };
         props.callbackFromEntity(data);
@@ -34,31 +49,21 @@ const EntityField = (props) => {
 
     const handleAddFieldSubmit = (evt) => {
         evt.preventDefault();
-
         setFieldItems([...fieldItems, {
             name: entityFieldName,
             desc: entityFieldDesc,
-            property1: entityFieldProp1,
-            property2: entityFieldProp2,
-            property3: entityFieldProp3,
-            idFieldProp: entityFieldIDProp,
+            properties: entityFieldProp,
             type: fieldType
         }]);
-        saveEntityField(evt);
+        saveEntityField();
         resetEntityFieldName();
         resetEntityFieldDesc();
         setFieldType('');
-        setEntityFieldProp1('');
-        setEntityFieldProp2('');
-        setEntityFieldProp3('');
-        setEntityFieldIDProp('')
+        setEntityFieldProp('');
         refProp1.current.checked = false;
         refProp2.current.checked = false;
         refProp3.current.checked = false;
         refPropID.current.checked = false;
-
-
-
     };
 
     const displayObject = (e) => {
@@ -78,15 +83,7 @@ const EntityField = (props) => {
 
     const handleProperty = (e, str) => {
         if (e.target.checked === true) {
-            if (str === "Index") {
-                setEntityFieldProp1(str)
-            } else if (str === "Unique") {
-                setEntityFieldProp2(str)
-            } else if (str === "Mandatory") {
-                setEntityFieldProp3(str)
-            } else if (str==="ID"){
-                setEntityFieldIDProp(str)
-            }
+                setEntityFieldProp([...entityFieldProp,str])
         }
     };
 
@@ -98,18 +95,18 @@ const EntityField = (props) => {
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded">
                     <div className="form-row">
                         <div className="form-group col-md-4">
-                            <label htmlFor="idfield-name">Name</label>
-                            <input type="text" className="form-control" id="idfield-name"
+                            <label>Name</label>
+                            <input type="text" className="form-control"
                                    placeholder="ID Field Name" {...bindEntityFieldName}/>
                         </div>
                         <div className="form-group col-md-4">
-                            <label htmlFor="idfield-description">Description</label>
-                            <input type="text" className="form-control" id="idfield-description"
+                            <label>Description</label>
+                            <input type="text" className="form-control"
                                    placeholder="ID Field Description" {...bindEntityFieldDesc}/>
                         </div>
 
-                        <div className="form-group col-md-4" id="idfield-properties">
-                            <label htmlFor="idfield-properties">Properties</label>
+                        <div className="form-group col-md-4">
+                            <label>Properties</label>
                             <div className="form-group">
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox"  ref={refPropID}
@@ -135,8 +132,8 @@ const EntityField = (props) => {
                         </div>
 
                         <div className="form-group col-md-4">
-                            <label htmlFor="idfield-type">Type</label>
-                            <select className="form-control" id="idfield-type" value={fieldType}
+                            <label>Type</label>
+                            <select className="form-control" value={fieldType}
                                     onChange={displayObject}>
                                 <option value="" hidden>Type</option>
                                 <option value="TEXT">Text</option>
@@ -183,10 +180,9 @@ const EntityField = (props) => {
                             <td className="font-weight-light">{item.desc}</td>
                             {/*<td className="font-weight-light">{item.property1 + '  '} {item.property2} {item.property3}</td>*/}
                             <td className="font-weight-lighter small">
-                                {item.idFieldProp} &nbsp;
-                                {item.property1}&nbsp;
-                                {item.property2}&nbsp;
-                                {item.property3}&nbsp;
+                                <ul>{
+                                    item.properties.map((property , ids)=> (<li key={ids}>{property}</li>))
+                                }</ul>
 
                             </td>
                             <td className="font-weight-light">{item.type}</td>
