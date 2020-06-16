@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import EntityField from "../components/entity-field";
 import {useInput} from "../hooks/input-hook";
+import EntityState from "../components/entity-state";
 
 const EntityDesign = () => {
 
@@ -13,22 +14,27 @@ const EntityDesign = () => {
 
 
     const data = {
-        "artifactId":entityArtifactId,
-        "description":entityDesc,
-        "fields":fields,
-        "idField":idField,
-        "name":entityName,
+        "artifactId": entityArtifactId,
+        "description": entityDesc,
+        "fields": fields,
+        "idField": idField,
+        "name": entityName,
         //"state":{},
-        "version":entityVersion
+        "version": entityVersion
     };
 
     const handleEntityDesignSubmit = () => {
-        console.log("nope"+JSON.stringify(data));
+        console.log("nope" + JSON.stringify(data));
+        resetEntityName();
+        resetEntityDesc();
+        resetEntityVersion();
+        resetEntityArtifactId();
+
     };
 
     const entityFieldCallback = (dataFromEntityDesign) => {
         console.log(dataFromEntityDesign.name);
-        if(dataFromEntityDesign.properties.includes("ID")){
+        if (dataFromEntityDesign.properties.includes("ID")) {
             console.log("ID is here")
             setIdField(dataFromEntityDesign);
         } else {
@@ -40,30 +46,35 @@ const EntityDesign = () => {
         <form>
             <div className="form-row ">
                 <div className="form-group col-md-6">
-                    <label>Name</label>
+                    <label>Name</label><span className="required">*</span>
                     <input type="text" className="form-control" placeholder="Entity Name" {...bindEntityName}/>
                 </div>
                 <div className="form-group col-md-6">
-                    <label>Description</label>
+                    <label>Description</label><span className="required">*</span>
                     <input type="text" className="form-control" placeholder="Entity Description" {...bindEntityDesc}/>
                 </div>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-6">
-                    <label>Version</label>
+                    <label>Version</label><span className="required">*</span>
                     <input type="text" className="form-control" placeholder="Entity Version" {...bindEntityVersion}/>
                 </div>
                 <div className="form-group col-md-6">
-                    <label>Artifact ID</label>
-                    <input type="text" className="form-control" placeholder="Entity Artifact ID" {...bindEntityArtifactId}/>
+                    <label>Artifact ID</label><span className="required">*</span>
+                    <input type="text" className="form-control"
+                           placeholder="Entity Artifact ID" {...bindEntityArtifactId}/>
                 </div>
             </div>
             <div>
-                <EntityField callbackFromEntity={entityFieldCallback}></EntityField>
+                <EntityState/>
+            </div>
+            <div>
+                <EntityField callbackFromEntity={entityFieldCallback}/>
             </div>
 
-
-            <button type="button" onClick={handleEntityDesignSubmit} className="btn btn-primary  font-weight-bold float-right mb-3 mr-3">Create Entity</button>
+            <button type="button" onClick={handleEntityDesignSubmit}
+                    className="btn btn-primary  font-weight-bold float-right mb-3 mr-3">Create Entity
+            </button>
 
         </form>
     );

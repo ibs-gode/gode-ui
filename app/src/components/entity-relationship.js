@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {useInput} from "../hooks/input-hook";
 
 const EntityRelationship = (props) => {
@@ -21,10 +21,9 @@ const EntityRelationship = (props) => {
         props.callbackFromEntityField(data);
         refRelationship.current.disabled = true;
     };
-
     return (
         <div>
-            <label htmlFor="type-relationship">Relationship Details</label>
+            <label>Relationship Details</label>
             <button type="submit" onClick={handleSaveRelationship} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save</button>
             <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded" ref={refRelationship}>
                 <div>

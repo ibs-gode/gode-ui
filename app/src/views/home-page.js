@@ -1,7 +1,6 @@
 import React from 'react';
 import Notifications from "react-notify-toast";
 import EntityDesign from './entity-design'
-import MainFormComponent from "../MainFormComponent";
 
 const HomePage = () => {
 
@@ -14,7 +13,7 @@ const HomePage = () => {
                             <ul className="nav nav-tabs card-header-tabs App-link font-weight-bolder font-italic" id="gode-header" >
                                 <li className="nav-item">
                                     <a className="nav-link active home-font-colour" href="#entity-design" data-toggle="tab"
-                                       aria-controls="entity-design" aria-selected="true">Entity Design</a>
+                                       aria-controls="entity-design">Entity Design</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link home-font-colour" href="#appDesign" data-toggle="tab" aria-controls="app-design">App Design</a>

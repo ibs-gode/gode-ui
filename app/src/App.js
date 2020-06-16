@@ -2,7 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import MainFormComponent from './MainFormComponent';
 import HomePage from './views/home-page.js'
 
 const App = () => {

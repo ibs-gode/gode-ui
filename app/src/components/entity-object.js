@@ -36,7 +36,7 @@ const EntityObject = (props) => {
 
     return (
         <div>
-        <label htmlFor="type-object">Object Details</label>
+        <label>Object Details</label>
         <button type="submit" onClick={handleSaveObject} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save</button>
         <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded" ref={refObject}>
             <div>
@@ -68,8 +68,7 @@ const EntityObject = (props) => {
                                 <option value="NUMBER">Number</option>
                                 <option value="HIGH_PRECISION_NUMBER">High Precision Number</option>
                                 <option value="DECIMAL">Decimal</option>
-                                <option value="HIGH_PRECISION_DECIMAL">High Precision Decimal
-                                </option>
+                                <option value="HIGH_PRECISION_DECIMAL">High Precision Decimal</option>
                             </select>
                             <button type="submit"  onClick={handleAddField} className="btn btn-dark btn-sm ml-3">+</button>
 

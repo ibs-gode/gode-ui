@@ -110,7 +110,7 @@ const EntityField = (props) => {
     return (
         <div>
             <div>
-                <label htmlFor="entity-field">Fields</label>
+                <label>Fields</label>
                 <button type="submit" onClick={handleAddFieldSubmit} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add Field</button>
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded">
                     <div className="form-row">
@@ -171,12 +171,12 @@ const EntityField = (props) => {
                     </div>
 
                     {showRelationship && <div>
-                        <EntityRelationship callbackFromEntityField={relationshipCallBack}></EntityRelationship>
+                        <EntityRelationship callbackFromEntityField={relationshipCallBack}/>
                     </div>}
 
 
                     {showObject && <div>
-                        <EntityObject callbackFromEntityFieldObject={objectCallBack}></EntityObject>
+                        <EntityObject callbackFromEntityFieldObject={objectCallBack}/>
                     </div>}
 
                 </fieldset>
