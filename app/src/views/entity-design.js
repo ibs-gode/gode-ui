@@ -9,7 +9,7 @@ const EntityDesign = () => {
         console.log(entityFieldObj.idField.name);
         console.log("nope"+JSON.stringify(entityFieldObj));
         setEntityFieldObj({});
-    }
+    };
 
     const entityFieldCallback = (dataFromEntityDesign) => {
 

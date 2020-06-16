@@ -20,26 +20,53 @@ const EntityField = (props) => {
 
 
     const saveEntityField = () => {
-        const data = {
-            idField: {
-                description: entityFieldDesc,
-                name: entityFieldName,
-                // objectType: {
-                //     description: '',
-                //     fields: [
-                //         {
-                //             description: '',
-                //             name: '',
-                //             type: ''
-                //         }
-                //     ],
-                //     name: ''
-                // },
-                properties: entityFieldProp,
-                relationship: relationshipObject,
-                type: fieldType
-            }
-        };
+        let data = {};
+        switch(fieldType){
+            case 'RELATIONSHIP' :
+                data = {
+                    idField: {
+                        description: entityFieldDesc,
+                        name: entityFieldName,
+                        properties: entityFieldProp,
+                        relationship: relationshipObject,
+                        type: fieldType
+                    }
+                };
+                setShowRelationship(false)
+                setRelationshipObject({});
+                break;
+            case 'OBJECT' :
+                data = {
+                    idField: {
+                        description: entityFieldDesc,
+                        name: entityFieldName,
+                        // objectType: {
+                        //     description: '',
+                        //     fields: [
+                        //         {
+                        //             description: '',
+                        //             name: '',
+                        //             type: ''
+                        //         }
+                        //     ],
+                        //     name: ''
+                        // },
+                        properties: entityFieldProp,
+                        type: fieldType
+                    }
+                };
+                break;
+            default:
+                data = {
+                    idField: {
+                        description: entityFieldDesc,
+                        name: entityFieldName,
+                        properties: entityFieldProp,
+                        type: fieldType
+                    }
+                };
+
+        }
         props.callbackFromEntity(data);
     };
 
@@ -66,8 +93,6 @@ const EntityField = (props) => {
         refProp2.current.checked = false;
         refProp3.current.checked = false;
         refPropID.current.checked = false;
-        setShowRelationship(false)
-        setRelationshipObject({});
     };
 
     const displayObject = (e) => {
