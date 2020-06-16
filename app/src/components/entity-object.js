@@ -37,7 +37,7 @@ const EntityObject = (props) => {
     return (
         <div>
         <label>Object Details</label>
-        <button type="submit" onClick={handleSaveObject} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save</button>
+        <button type="submit" onClick={handleSaveObject} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save Object</button>
         <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded" ref={refObject}>
             <div>
                 <div className="form-row ">

@@ -110,7 +110,7 @@ const EntityField = (props) => {
     return (
         <div>
             <div>
-                <label>Fields</label>
+                <label>Fields</label><span className="required">*</span>
                 <button type="submit" onClick={handleAddFieldSubmit} className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add Field</button>
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded">
                     <div className="form-row">

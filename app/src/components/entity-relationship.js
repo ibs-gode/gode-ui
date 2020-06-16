@@ -24,7 +24,7 @@ const EntityRelationship = (props) => {
     return (
         <div>
             <label>Relationship Details</label>
-            <button type="submit" onClick={handleSaveRelationship} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save</button>
+            <button type="submit" onClick={handleSaveRelationship} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save Relationship</button>
             <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded" ref={refRelationship}>
                 <div>
                     <div className="form-row ">

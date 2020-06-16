@@ -7,33 +7,34 @@ const EntityDesign = () => {
 
     const [idField, setIdField] = useState({});
     const [fields, setFields] = useState([]);
-    const {value: entityName, bind: bindEntityName, reset: resetEntityName} = useInput('');
-    const {value: entityDesc, bind: bindEntityDesc, reset: resetEntityDesc} = useInput('');
-    const {value: entityVersion, bind: bindEntityVersion, reset: resetEntityVersion} = useInput('');
-    const {value: entityArtifactId, bind: bindEntityArtifactId, reset: resetEntityArtifactId} = useInput('');
+    const [entityState, setEntityState] = useState({});
+    const {value: entityName, bind: bindEntityName} = useInput('');
+    const {value: entityDesc, bind: bindEntityDesc} = useInput('');
+    const {value: entityVersion, bind: bindEntityVersion} = useInput('');
+    const {value: entityArtifactId, bind: bindEntityArtifactId} = useInput('');
 
 
-    const data = {
+    let data = {
         "artifactId": entityArtifactId,
         "description": entityDesc,
         "fields": fields,
         "idField": idField,
         "name": entityName,
-        //"state":{},
+        "state":entityState,
         "version": entityVersion
     };
 
     const handleEntityDesignSubmit = () => {
         console.log("nope" + JSON.stringify(data));
-        resetEntityName();
-        resetEntityDesc();
-        resetEntityVersion();
-        resetEntityArtifactId();
+        data = {};
+    };
 
+    const entityStateCallback = (dataFromEntityState) => {
+        console.log(JSON.stringify(dataFromEntityState));
+            setEntityState(dataFromEntityState);
     };
 
     const entityFieldCallback = (dataFromEntityDesign) => {
-        console.log(dataFromEntityDesign.name);
         if (dataFromEntityDesign.properties.includes("ID")) {
             console.log("ID is here")
             setIdField(dataFromEntityDesign);
@@ -66,7 +67,7 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityState/>
+                <EntityState callbackFromEntityState={entityStateCallback}/>
             </div>
             <div>
                 <EntityField callbackFromEntity={entityFieldCallback}/>
