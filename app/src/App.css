@@ -50,6 +50,10 @@ body{
   background-color: #c3e0e6;
 }
 
+.home-font-colour {
+  color: midnightblue;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

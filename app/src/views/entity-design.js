@@ -1,20 +1,38 @@
 import React, {useState} from 'react';
 import EntityField from "../components/entity-field";
+import {useInput} from "../hooks/input-hook";
 
 const EntityDesign = () => {
 
-    const [entityFieldObj, setEntityFieldObj] = useState({});
+    const [idField, setIdField] = useState({});
+    const [fields, setFields] = useState([]);
+    const {value: entityName, bind: bindEntityName, reset: resetEntityName} = useInput('');
+    const {value: entityDesc, bind: bindEntityDesc, reset: resetEntityDesc} = useInput('');
+    const {value: entityVersion, bind: bindEntityVersion, reset: resetEntityVersion} = useInput('');
+    const {value: entityArtifactId, bind: bindEntityArtifactId, reset: resetEntityArtifactId} = useInput('');
 
-    const displayResult = () => {
-        console.log("nope"+JSON.stringify(entityFieldObj));
-        setEntityFieldObj({});
+
+    const data = {
+        "artifactId":entityArtifactId,
+        "description":entityDesc,
+        "fields":fields,
+        "idField":idField,
+        "name":entityName,
+        //"state":{},
+        "version":entityVersion
+    };
+
+    const handleEntityDesignSubmit = () => {
+        console.log("nope"+JSON.stringify(data));
     };
 
     const entityFieldCallback = (dataFromEntityDesign) => {
-        setEntityFieldObj(dataFromEntityDesign);
         console.log(dataFromEntityDesign.name);
         if(dataFromEntityDesign.properties.includes("ID")){
             console.log("ID is here")
+            setIdField(dataFromEntityDesign);
+        } else {
+            setFields([...fields, dataFromEntityDesign])
         }
     };
 
@@ -22,24 +40,22 @@ const EntityDesign = () => {
         <form>
             <div className="form-row ">
                 <div className="form-group col-md-6">
-                    <label htmlFor="entity-name">Name</label>
-                    <input type="text" className="form-control" id="entity-name" placeholder="Entity Name"/>
+                    <label>Name</label>
+                    <input type="text" className="form-control" placeholder="Entity Name" {...bindEntityName}/>
                 </div>
                 <div className="form-group col-md-6">
-                    <label htmlFor="entity-description">Description</label>
-                    <input type="text" className="form-control" id="entity-description"
-                           placeholder="Entity Description"/>
+                    <label>Description</label>
+                    <input type="text" className="form-control" placeholder="Entity Description" {...bindEntityDesc}/>
                 </div>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-6">
-                    <label htmlFor="entity-version">Version</label>
-                    <input type="text" className="form-control" id="entity-version" placeholder="Entity Version"/>
+                    <label>Version</label>
+                    <input type="text" className="form-control" placeholder="Entity Version" {...bindEntityVersion}/>
                 </div>
                 <div className="form-group col-md-6">
-                    <label htmlFor="entity-artifact-id">Artifact ID</label>
-                    <input type="text" className="form-control" id="entity-artifact-id"
-                           placeholder="Entity Artifact ID"/>
+                    <label>Artifact ID</label>
+                    <input type="text" className="form-control" placeholder="Entity Artifact ID" {...bindEntityArtifactId}/>
                 </div>
             </div>
             <div>
@@ -47,7 +63,7 @@ const EntityDesign = () => {
             </div>
 
 
-            <button type="button" onClick={displayResult} className="btn btn-primary  float-right mb-3">Create Entity</button>
+            <button type="button" onClick={handleEntityDesignSubmit} className="btn btn-primary  font-weight-bold float-right mb-3 mr-3">Create Entity</button>
 
         </form>
     );

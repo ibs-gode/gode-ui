@@ -13,20 +13,20 @@ const HomePage = () => {
                         <div className="card-header home-colour">
                             <ul className="nav nav-tabs card-header-tabs App-link font-weight-bolder font-italic" id="gode-header" >
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="#entity-design" data-toggle="tab"
+                                    <a className="nav-link active home-font-colour" href="#entity-design" data-toggle="tab"
                                        aria-controls="entity-design" aria-selected="true">Entity Design</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#appDesign" data-toggle="tab" aria-controls="app-design">App Design</a>
+                                    <a className="nav-link home-font-colour" href="#appDesign" data-toggle="tab" aria-controls="app-design">App Design</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#app-build" data-toggle="tab" aria-controls="app-build">App Build</a>
+                                    <a className="nav-link home-font-colour" href="#app-build" data-toggle="tab" aria-controls="app-build">App Build</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#app-deploy" data-toggle="tab" aria-controls="app-deploy">App Deploy</a>
+                                    <a className="nav-link home-font-colour" href="#app-deploy" data-toggle="tab" aria-controls="app-deploy">App Deploy</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#api-docs" data-toggle="tab" aria-controls="api-docs">API Docs</a>
+                                    <a className="nav-link home-font-colour" href="#api-docs" data-toggle="tab" aria-controls="api-docs">API Docs</a>
                                 </li>
                             </ul>
                         </div>
