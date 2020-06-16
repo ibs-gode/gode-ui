@@ -16,54 +16,40 @@ const EntityField = (props) => {
     const {value: entityFieldDesc, bind: bindEntityFieldDesc, reset: resetEntityFieldDesc} = useInput('');
     const[entityFieldProp, setEntityFieldProp] = useState([])
     const [fieldType, setFieldType] = useState('');
-    const [relationshipObject, setRelationshipObject] = useState({});
-
+    const [relationship, setRelationship] = useState({});
+    const [object, setObject] = useState({});
 
     const saveEntityField = () => {
         let data = {};
         switch(fieldType){
             case 'RELATIONSHIP' :
                 data = {
-                    idField: {
                         description: entityFieldDesc,
                         name: entityFieldName,
                         properties: entityFieldProp,
-                        relationship: relationshipObject,
+                        relationship: relationship,
                         type: fieldType
-                    }
                 };
-                setShowRelationship(false)
-                setRelationshipObject({});
+                setShowRelationship(false);
+                setRelationship({});
                 break;
             case 'OBJECT' :
                 data = {
-                    idField: {
                         description: entityFieldDesc,
                         name: entityFieldName,
-                        // objectType: {
-                        //     description: '',
-                        //     fields: [
-                        //         {
-                        //             description: '',
-                        //             name: '',
-                        //             type: ''
-                        //         }
-                        //     ],
-                        //     name: ''
-                        // },
+                        objectType: object,
                         properties: entityFieldProp,
                         type: fieldType
-                    }
                 };
+                setShowObject(false);
+                setObject({});
                 break;
             default:
                 data = {
-                    idField: {
                         description: entityFieldDesc,
                         name: entityFieldName,
                         properties: entityFieldProp,
                         type: fieldType
-                    }
                 };
 
         }
@@ -71,9 +57,14 @@ const EntityField = (props) => {
     };
 
     const relationshipCallBack = (dataFromRelationship) => {
-        setRelationshipObject(dataFromRelationship);
+        setRelationship(dataFromRelationship);
         console.log(dataFromRelationship.artifactId)
         console.log(JSON.stringify(dataFromRelationship));
+    };
+
+    const objectCallBack = (dataFromObject) => {
+        setObject(dataFromObject);
+        console.log(JSON.stringify(dataFromObject));
     };
 
     const handleAddFieldSubmit = (evt) => {
@@ -185,8 +176,7 @@ const EntityField = (props) => {
 
 
                     {showObject && <div>
-                        <label htmlFor="type-object">Object Details</label>
-                        <EntityObject></EntityObject>
+                        <EntityObject callbackFromEntityFieldObject={objectCallBack}></EntityObject>
                     </div>}
 
                 </fieldset>

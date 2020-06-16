@@ -1,53 +1,63 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useInput} from "../hooks/input-hook";
 
-const EntityObject = () => {
+const EntityObject = (props) => {
 
+    const refObject = useRef();
+    const {value: objectName, bind: bindObjectName} = useInput('');
+    const {value: objectDesc, bind: bindObjectDesc} = useInput('');
     const [objectFieldItems, setObjectFieldItems] = useState([]);
     const {value: fieldName, bind: bindFieldName, reset: resetFieldName} = useInput('');
     const {value: fieldDesc, bind: bindFieldDesc, reset: resetFieldDesc} = useInput('');
     const {value: fieldType, bind: bindFieldType, reset: resetFieldType} = useInput('');
 
-    const handleSubmit = (evt) => {
+    const handleAddField = (evt) => {
         evt.preventDefault();
 
         setObjectFieldItems([...objectFieldItems, {
             name: fieldName,
-            desc: fieldDesc,
+            description: fieldDesc,
             type: fieldType
         }]);
         resetFieldName();
         resetFieldDesc();
         resetFieldType();
-    }
+    };
+    const handleSaveObject = (evt) => {
+        evt.preventDefault();
+        const data = {
+            description: objectDesc,
+            fields: objectFieldItems,
+            name: objectName
+        };
+        props.callbackFromEntityFieldObject(data);
+        refObject.current.disabled = true;
+    };
+
     return (
-        <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded"
-                  id="type-object">
+        <div>
+        <label htmlFor="type-object">Object Details</label>
+        <button type="submit" onClick={handleSaveObject} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save</button>
+        <fieldset className="form-group border border-secondary pl-3 pt-3 pr-3 mr-3 rounded" ref={refObject}>
             <div>
                 <div className="form-row ">
                     <div className="form-group col-md-6">
-                        <label htmlFor="entity-name">Name</label>
-                        <input type="text" className="form-control" id="entity-name"
-                               placeholder="Entity Name"/>
+                        <label>Name</label>
+                        <input type="text" className="form-control" placeholder="Object Name" {...bindObjectName}/>
                     </div>
                     <div className="form-group col-md-6">
-                        <label htmlFor="entity-description">Description</label>
-                        <input type="text" className="form-control" id="entity-description"
-                               placeholder="Entity Description"/>
+                        <label>Description</label>
+                        <input type="text" className="form-control" placeholder="Object Description" {...bindObjectDesc}/>
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="type-object">Field Details</label>
-                    <fieldset className="form-group border  pl-3 pt-3 pr-3 mr-3 mt-2 rounded"
-                              id="type-object">
-                        <form onSubmit={handleSubmit}>
+                    <label>Object Fields</label>
+                    <fieldset className="form-group border  pl-3 pt-3 pr-3 mr-3 rounded">
                             <input type="text" className="form-control-sm ml-5 mr-5 border"
-                                   id="field-name"
                                    placeholder="Field Name" {...bindFieldName}/>
                             <input type="text" className="form-control-sm ml-5 mr-5 border"
-                                   id="field-description"
                                    placeholder="Field Description" {...bindFieldDesc}/>
-                            <select className="form-control-sm ml-5 mr-5 border" id="field-type" {...bindFieldType}>
+                            <select className="form-control-sm ml-5 mr-5 border" {...bindFieldType}>
                                 <option value="" hidden>Type</option>
                                 <option value="TEXT">Text</option>
                                 <option value="OBJECT">Object</option>
@@ -61,8 +71,7 @@ const EntityObject = () => {
                                 <option value="HIGH_PRECISION_DECIMAL">High Precision Decimal
                                 </option>
                             </select>
-                            <button type="submit" className="btn btn-dark btn-sm ml-3">+</button>
-                        </form>
+                            <button type="submit"  onClick={handleAddField} className="btn btn-dark btn-sm ml-3">+</button>
 
                         <table className="table table-striped mt-3 form-control-sm">
                             <thead>
@@ -73,11 +82,11 @@ const EntityObject = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {objectFieldItems.map((item) => {
+                            {objectFieldItems.map((item, ids) => {
                                 return (
-                                    <tr>
+                                    <tr key={ids}>
                                         <td className="font-weight-light">{item.name}</td>
-                                        <td className="font-weight-light">{item.desc}</td>
+                                        <td className="font-weight-light">{item.description}</td>
                                         <td className="font-weight-light">{item.type}</td>
                                     </tr>
                                 )
@@ -88,6 +97,7 @@ const EntityObject = () => {
                 </div>
             </div>
         </fieldset>
+        </div>
     );
 };
 

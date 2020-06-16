@@ -8,21 +8,10 @@ const EntityRelationship = (props) => {
     const {value: relationDesc, bind: bindRelationDesc} = useInput('');
     const {value: relationVersion, bind: bindRelationVersion} = useInput('');
     const {value: relationArtifact, bind: bindRelationArtifact} = useInput('');
-    const [relationshipItems, setRelationshipItems] = useState([]);
 
 
     const handleSaveRelationship = (evt) => {
         evt.preventDefault();
-        setRelationshipItems([...relationshipItems, {
-            relName: relationName,
-            relDesc: relationDesc,
-            relVersion: relationVersion,
-            relArtifact: relationArtifact
-        }]);
-        saveRelationship();
-    };
-
-    const saveRelationship = () => {
         const data = {
             artifactId: relationArtifact,
             description: relationDesc,
@@ -32,6 +21,7 @@ const EntityRelationship = (props) => {
         props.callbackFromEntityField(data);
         refRelationship.current.disabled = true;
     };
+
     return (
         <div>
             <label htmlFor="type-relationship">Relationship Details</label>

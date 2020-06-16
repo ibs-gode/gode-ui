@@ -6,27 +6,16 @@ const EntityDesign = () => {
     const [entityFieldObj, setEntityFieldObj] = useState({});
 
     const displayResult = () => {
-        console.log(entityFieldObj.idField.name);
         console.log("nope"+JSON.stringify(entityFieldObj));
         setEntityFieldObj({});
     };
 
     const entityFieldCallback = (dataFromEntityDesign) => {
-
-        // setEntityFieldObj(oldState => ({
-        //     idField: {
-        //         ...oldState.idField,
-        //         name : dataFromEntityDesign.idField.name,
-        //         description : dataFromEntityDesign.idField.description
-        //     }
-        // }));
-
         setEntityFieldObj(dataFromEntityDesign);
-        console.log(dataFromEntityDesign.idField.name);
-        if(dataFromEntityDesign.idField.properties.includes("ID")){
+        console.log(dataFromEntityDesign.name);
+        if(dataFromEntityDesign.properties.includes("ID")){
             console.log("ID is here")
         }
-        //console.log(JSON.stringify(entityFieldObj)); //will not work inside the method
     };
 
     return (
