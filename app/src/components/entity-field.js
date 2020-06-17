@@ -135,17 +135,17 @@ const EntityField = (props) => {
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox"  ref={refProp1}
-                                           value="Index" onClick={e => handleProperty(e, "Index")}/>
+                                           value="INDEX" onClick={e => handleProperty(e, "INDEX")}/>
                                     <label className="form-check-label">Index</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" ref={refProp2}
-                                           value="Unique" onClick={e => handleProperty(e, "Unique")}/>
+                                           value="UNIQUE" onClick={e => handleProperty(e, "UNIQUE")}/>
                                     <label className="form-check-label">Unique</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" ref={refProp3}
-                                           value="Mandatory" onClick={e => handleProperty(e, "Mandatory")}/>
+                                           value="MANDATORY" onClick={e => handleProperty(e, "MANDATORY")}/>
                                     <label className="form-check-label">Mandatory</label>
                                 </div>
                             </div>
