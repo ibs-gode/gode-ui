@@ -26,7 +26,8 @@ const EntityDesign = () => {
         "version": entityVersion
     };
 
-    const handleEntityDesignSubmit = () => {
+    const handleEntityDesignSubmit = (e) => {
+        e.preventDefault();
         console.log("nope" + JSON.stringify(data));
         postEntityData(data);
     };
@@ -50,6 +51,12 @@ const EntityDesign = () => {
             switch (resp.status) {
                 case 200:
                     HandleToastMessage("Entity has been created.",StatusEnum.SUCCESS);
+                    resetEntityName();
+                    resetEntityDesc();
+                    resetEntityVersion();
+                    resetEntityArtifactID();
+                    setFields([]);
+                    setIdField({})
                     data = {};
                     break;
                 case 400:
@@ -100,10 +107,10 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityState callbackFromEntityState={entityStateCallback}/>
+                <EntityState callbackFromEntityState={entityStateCallback} fields={fields}/>
             </div>
             <div>
-                <EntityField callbackFromEntity={entityFieldCallback}/>
+                <EntityField callbackFromEntity={entityFieldCallback} fields={fields} idField={idField}/>
             </div>
 
             <button type="submit"

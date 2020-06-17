@@ -23,6 +23,16 @@ const EntityState = (props) => {
         }
     }, [volatileEntity]);
 
+    const booleanConvert = (strr) => {
+        if (strr === "True") {
+            return true;
+        } else if (strr === "False") {
+            return false;
+        } else {
+            return "";
+        }
+    };
+
     const handleSaveState = (e) => {
         e.preventDefault();
         let data = {};
@@ -57,13 +67,7 @@ const EntityState = (props) => {
             }
         }
         props.callbackFromEntityState(data);
-        if (str === "True") {
-            return true;
-        } else if (str === "False") {
-            return false;
-        } else {
-            return "";
-        }
+       
     };
 
     return (

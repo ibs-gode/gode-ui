@@ -1,10 +1,12 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import EntityRelationship from "./entity-relationship";
 import EntityObject from "./entity-object";
 import {useInput} from "../hooks/input-hook";
 
-const EntityField = (props) => {
+const EntityField = ({callbackFromEntity, fields,idField}) => {
 
+    const initialRender = useRef(true);
+    const lastFields = useRef(fields);
     const refProp1 = useRef();
     const refProp2 = useRef();
     const refProp3 = useRef();
@@ -18,6 +20,16 @@ const EntityField = (props) => {
     const [fieldType, setFieldType] = useState('');
     const [relationship, setRelationship] = useState({});
     const [object, setObject] = useState({});
+
+    useEffect(
+        () => {
+              if(fields.length==0 && fieldItems.length>0 && !idField.hasOwnProperty("type")){
+                
+                setFieldItems([]);
+              }
+        },
+        [fields,idField]
+      );
 
     const saveEntityField = () => {
         let data = {};
@@ -53,7 +65,7 @@ const EntityField = (props) => {
                 };
 
         }
-        props.callbackFromEntity(data);
+        callbackFromEntity(data);
     };
 
     const relationshipCallBack = (dataFromRelationship) => {
