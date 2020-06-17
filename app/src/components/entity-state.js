@@ -4,6 +4,7 @@ import {useInput} from "../hooks/input-hook";
 const EntityState = (props) => {
 
     const refStateChild = useRef();
+    const refStateSpan = useRef();
     const refState = useRef();
     const {value: volatileEntity, bind: bindVolatileEntity} = useInput('');
     const {value: asyncStore, bind: bindAsyncStore} = useInput('');
@@ -18,8 +19,11 @@ const EntityState = (props) => {
     useEffect(() => {
         if (volatileEntity === "True" || volatileEntity === "") {
             refStateChild.current.hidden = true;
+            refStateSpan.current.hidden = true;
+
         } else if (volatileEntity === "False") {
             refStateChild.current.hidden = false;
+            refStateSpan.current.hidden = false;
         }
     }, [volatileEntity]);
 
@@ -83,25 +87,25 @@ const EntityState = (props) => {
                         <label>Volatile</label><span className="required">*</span>
                         <select className="form-control-sm ml-3"  {...bindVolatileEntity}>
                             <option value="" hidden>Select</option>
-                            <option value="True">True</option>
-                            <option value="False">False</option>
-                        </select>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                        </select><span ref={refStateSpan} className="small font-italic home-font-colour ml-3">Please provide either Entity State Store details or Operations Level details</span>
                     </div>
                     <div className="form-row" ref={refStateChild}>
                         <div>
                             <label className="font-weight-lighter">Entity State Store</label>
                             <fieldset className="form-group border  pl-3 pt-3 pr-3 mr-3 pb-3 rounded">
                                 <label className="font-weight-lighter small">Async Store Sync</label>
-                                <select className="form-control-sm ml-1 mr-5 border" {...bindAsyncStore}>
+                                <select className="form-control-sm ml-1 mr-5 border " {...bindAsyncStore}>
                                     <option value="" hidden>Select</option>
-                                    <option value="True">True</option>
-                                    <option value="False">False</option>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
                                 </select>
                                 <label className="font-weight-lighter small">Cached</label>
                                 <select className="form-control-sm ml-1 mr-5 border" {...bindCached}>
                                     <option value="" hidden>Select</option>
-                                    <option value="True">True</option>
-                                    <option value="False">False</option>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
                                 </select>
                                 <label className="font-weight-lighter small">Store Name</label>
                                 <select className="form-control-sm ml-1 mr-5 border" {...bindStoreName}>
@@ -145,14 +149,14 @@ const EntityState = (props) => {
                                 <label className="font-weight-lighter small">Async Read</label>
                                 <select className="form-control-sm ml-1 mr-5 border" {...bindAsyncRead}>
                                     <option value="" hidden>Select</option>
-                                    <option value="True">True</option>
-                                    <option value="False">False</option>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
                                 </select>
                                 <label className="font-weight-lighter small">Transactional</label>
                                 <select className="form-control-sm ml-1 mr-5 border" {...bindTransactional}>
                                     <option value="" hidden>Select</option>
-                                    <option value="True">True</option>
-                                    <option value="False">False</option>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
                                 </select>
 
                             </fieldset>
