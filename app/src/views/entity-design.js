@@ -10,10 +10,10 @@ const EntityDesign = () => {
     const [idField, setIdField] = useState({});
     const [fields, setFields] = useState([]);
     const [entityState, setEntityState] = useState({});
-    const {value: entityName, bind: bindEntityName} = useInput('');
-    const {value: entityDesc, bind: bindEntityDesc} = useInput('');
-    const {value: entityVersion, bind: bindEntityVersion} = useInput('');
-    const {value: entityArtifactId, bind: bindEntityArtifactId} = useInput('');
+    const {value: entityName, bind: bindEntityName, reset: resetEntityName} = useInput('');
+    const {value: entityDesc, bind: bindEntityDesc, reset: resetEntityDesc} = useInput('');
+    const {value: entityVersion, bind: bindEntityVersion, reset: resetEntityVersion} = useInput('');
+    const {value: entityArtifactId, bind: bindEntityArtifactId, reset: resetEntityArtifactID} = useInput('');
 
 
     let data = {
@@ -77,7 +77,7 @@ const EntityDesign = () => {
     };
 
     return (
-        <form>
+        <form onSubmit={handleEntityDesignSubmit}>
             <div className="form-row ">
                 <div className="form-group col-md-6">
                     <label>Name</label><span className="required">*</span>
@@ -106,7 +106,7 @@ const EntityDesign = () => {
                 <EntityField callbackFromEntity={entityFieldCallback}/>
             </div>
 
-            <button type="button" onClick={handleEntityDesignSubmit}
+            <button type="submit"
                     className="btn btn-primary  font-weight-bold float-right mb-3 mr-3">Create Entity
             </button>
 

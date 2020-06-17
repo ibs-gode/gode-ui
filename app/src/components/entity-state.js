@@ -57,11 +57,6 @@ const EntityState = (props) => {
             }
         }
         props.callbackFromEntityState(data);
-        refState.current.disabled = true;
-    };
-
-
-    const booleanConvert = (str) => {
         if (str === "True") {
             return true;
         } else if (str === "False") {
@@ -104,8 +99,17 @@ const EntityState = (props) => {
                                     <option value="False">False</option>
                                 </select>
                                 <label className="font-weight-lighter small">Store Name</label>
-                                <input type="text" className="form-control-sm ml-1 mr-5 border"
-                                       placeholder="Store Name" {...bindStoreName}/>
+                                <select className="form-control-sm ml-1 mr-5 border" {...bindStoreName}>
+                                    <option value="" hidden>Select</option>
+                                    <option value="MONGODB">Mongo</option>
+                                    <option value="MYSQL">MySQL</option>
+                                    <option value="ORACLE_DB">Oracle</option>
+                                    <option value="DB2">DB2</option>
+                                    <option value="POSTGRE_SQL">PostgreSQL</option>
+                                    <option value="MARIA_DB">MariaDB</option>
+                                    <option value="CASSANDRA">Cassandra</option>
+                                    <option value="NEO4J">Neo4j</option>
+                                </select>
                             </fieldset>
                         </div>
 
