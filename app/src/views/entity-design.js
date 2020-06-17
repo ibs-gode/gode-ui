@@ -57,6 +57,7 @@ const EntityDesign = () => {
                     resetEntityArtifactID();
                     setFields([]);
                     setIdField({})
+                    setEntityState({});
                     data = {};
                     break;
                 case 400:
@@ -107,7 +108,7 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityState callbackFromEntityState={entityStateCallback} fields={fields}/>
+                <EntityState callbackFromEntityState={entityStateCallback} fields={fields} idField={idField} entityState={entityState}/>
             </div>
             <div>
                 <EntityField callbackFromEntity={entityFieldCallback} fields={fields} idField={idField}/>
