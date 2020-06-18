@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {useInput} from "../hooks/input-hook";
 import EntityAppList from "../components/entity-app-list";
 import EntityWithNameList from "../components/entity-with-name-list";
+import {MyConfig} from "../config/config";
+import {HandleToastMessage, StatusEnum} from "../common/utils";
 
 const AppDesign = () => {
 
@@ -20,6 +22,48 @@ const AppDesign = () => {
     const [functionItems, setFunctionItems] = useState([]);
     const [resetRequired, setResetRequired] = useState('');
 
+    const postEntityData=(data) =>{
+        const requestOpt ={
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "context": {
+                    "handle": "string"
+                },
+                "data":data})
+        };
+
+        fetch(MyConfig.apiBaseUrl+ MyConfig.appDesignURI,requestOpt).then(resp =>{
+            console.log(resp);
+            switch (resp.status) {
+                case 200:
+                    HandleToastMessage("Entity has been created.",StatusEnum.SUCCESS);
+                    resetAppName();
+                    resetAppDesc();
+                    resetAppVersion();
+                    resetAppArtifactID();
+                    resetAppAvailability();
+                    resetAppDistributes();
+                    resetAppScalability();
+                    setEntities([]);
+                    setFunctionItems([]);
+                    setAppDependencies([]);
+                    setFunctionInputs([]);
+                    setFunctionOutputs([]);
+                    data = {};
+                    break;
+                case 400:
+                    HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                    break;
+                default:
+                    HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                    break;
+            }
+        })
+    };
 
     const dependenciesCallBack = (dataFromEntityList) => {
         setAppDependencies([...appDependencies, dataFromEntityList])
@@ -81,6 +125,7 @@ const AppDesign = () => {
     const display = (e) => {
         e.preventDefault();
         console.log(JSON.stringify(data));
+        postEntityData(data);
     };
 
     return (
