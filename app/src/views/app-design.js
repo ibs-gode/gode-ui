@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useInput} from "../hooks/input-hook";
 import EntityAppList from "../components/entity-app-list";
+import EntityWithNameList from "../components/entity-with-name-list";
 
 const AppDesign = () => {
 
@@ -9,57 +10,77 @@ const AppDesign = () => {
     const {value: appVersion, bind: bindAppVersion, reset: resetAppVersion} = useInput('');
     const {value: appArtifactId, bind: bindAppArtifactId, reset: resetAppArtifactID} = useInput('');
     const {value: funMethodName, bind: bindFunMethodName, reset: resetFunMethodName} = useInput('');
+    const {value: appAvailability, bind: bindAppAvailability, reset: resetAppAvailability} = useInput('');
+    const {value: appDistributes, bind: bindAppDistributes, reset: resetAppDistributes} = useInput('');
+    const {value: appScalability, bind: bindAppScalability, reset: resetAppScalability} = useInput('');
     const [appDependencies, setAppDependencies] = useState([]);
     const [entities, setEntities] = useState([]);
     const [functionInputs, setFunctionInputs] = useState([]);
     const [functionOutputs, setFunctionOutputs] = useState([]);
     const [functionItems, setFunctionItems] = useState([]);
+    const [resetRequired, setResetRequired] = useState('');
 
 
     const dependenciesCallBack = (dataFromEntityList) => {
-        console.log(JSON.stringify(dataFromEntityList));
         setAppDependencies([...appDependencies, dataFromEntityList])
     };
 
     const entitiesCallBack = (dataFromEntityList) => {
-        console.log(JSON.stringify(dataFromEntityList));
         setEntities([...entities, dataFromEntityList])
     };
 
-    const functionInputCallBack = (dataFromEntityList) => {
-        console.log(JSON.stringify(dataFromEntityList));
-        setFunctionInputs([...functionInputs, dataFromEntityList])
+    const functionInputCallBack = (dataFromEntityWithArgList) => {
+        setFunctionInputs([...functionInputs, dataFromEntityWithArgList])
+        setResetRequired("");
     };
 
-    const functionOutputCallBack = (dataFromEntityList) => {
-        console.log(JSON.stringify(dataFromEntityList));
-        setFunctionOutputs([...functionOutputs, dataFromEntityList])
+    const functionOutputCallBack = (dataFromEntityWithArgList) => {
+        setFunctionOutputs([...functionOutputs, dataFromEntityWithArgList])
+        setResetRequired("");
     };
 
     const handleAddFunctionSubmit = (evt) => {
         evt.preventDefault();
-        // setFunctionItems([...functionItems, {
-        //     methodName: funMethodName,
-        //     inputs: entityFieldDesc,
-        //     outputs: entityFieldProp
-        // }]);
-        // saveEntityField();
-        // resetEntityFieldName();
-        // resetEntityFieldDesc();
-        // setFieldType('');
-        // setEntityFieldProp([]);
-        // refProp1.current.checked = false;
-        // refProp2.current.checked = false;
-        // refProp3.current.checked = false;
-        // refPropID.current.checked = false;
+        setFunctionItems([...functionItems, {
+            methodName: funMethodName,
+            input: functionInputs,
+            output: functionOutputs
+        }]);
+        console.log(JSON.stringify(functionInputs));
+        resetFunMethodName();
+        setFunctionInputs([]);
+        setFunctionOutputs([]);
+        setResetRequired("YES")
+    };
+
+    const booleanConvert = (str) => {
+        if (str === "True") {
+            return true;
+        } else if (str === "False") {
+            return false;
+        } else {
+            return "";
+        }
+    };
+
+    let data = {
+        artifactId: appArtifactId,
+        dependencies: appDependencies,
+        description: appDesc,
+        entities: entities,
+        functions: functionItems,
+        name:appName,
+        usage: {
+            availability:appAvailability,
+            distributes:booleanConvert(appDistributes),
+            scalability:appScalability
+        },
+        version : appVersion
     };
 
     const display = (e) => {
         e.preventDefault();
-        console.log(JSON.stringify(appDependencies));
-        console.log(JSON.stringify(entities));
-        console.log(JSON.stringify(functionInputs));
-        console.log(JSON.stringify(functionOutputs));
+        console.log(JSON.stringify(data));
     };
 
     return (
@@ -85,6 +106,39 @@ const AppDesign = () => {
                            placeholder="App Artifact ID" {...bindAppArtifactId}/>
                 </div>
             </div>
+            <div>
+                <label>Usage</label>
+                <fieldset className="form-group border border-secondary pl-3 pt-1 rounded">
+                    <div className="form-row mr-1 mt-2">
+                        <div className="form-group col-md-4">
+                            <label className="font-weight-light">Availability</label>
+                            <select className="form-control" {...bindAppAvailability}>
+                                <option value="" hidden>Select</option>
+                                <option value="HIGH">High</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="LOW">Low</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label className="font-weight-light">Distributes</label>
+                            <select className="form-control" {...bindAppDistributes}>
+                                <option value="" hidden>Select</option>
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label className="font-weight-light">Scalability</label>
+                            <select className="form-control" {...bindAppScalability}>
+                                <option value="" hidden>Select</option>
+                                <option value="HIGH">High</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="LOW">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
             <EntityAppList type={"ENTITY"} label={"Dependencies"} callBackFunction={dependenciesCallBack}/>
             <EntityAppList  type={"ENTITY"} label={"Entities"} callBackFunction={entitiesCallBack}/>
             <div>
@@ -94,7 +148,7 @@ const AppDesign = () => {
                     <fieldset className="form-group border border-secondary pl-3 pt-1 rounded">
                         <div className="form-row mt-3">
                             <div className="form-group ">
-                                <label>Method Name</label>
+                                <label className="pt-2 form-control-sm">Method Name</label>
                             </div>
                             <div className="form-group ml-3">
                                 <input type="text" className="form-control" {...bindFunMethodName}
@@ -102,10 +156,10 @@ const AppDesign = () => {
                             </div>
                         </div>
                         <div className="mr-3">
-                            <EntityAppList type={"ENTITY"} label={"Input"} callBackFunction={functionInputCallBack}/>
+                            <EntityWithNameList label={"Input"} clearTable={resetRequired} callBackFunction={functionInputCallBack}/>
                         </div>
                         <div className="mr-3">
-                            <EntityAppList type={"ENTITY"}  label={"Output"} callBackFunction={functionOutputCallBack}/>
+                            <EntityWithNameList label={"Output"} clearTable={resetRequired} callBackFunction={functionOutputCallBack}/>
                         </div>
                     </fieldset>
                 </div>
@@ -118,22 +172,26 @@ const AppDesign = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {/*{fieldItems.map((item, idx) => {*/}
-                    {/*    return (*/}
-                    {/*        <tr key={idx}>*/}
-                    {/*            <td className="font-weight-light">{item.name}</td>*/}
-                    {/*            <td className="font-weight-light">{item.desc}</td>*/}
-                    {/*            /!*<td className="font-weight-light">{item.property1 + '  '} {item.property2} {item.property3}</td>*!/*/}
-                    {/*            <td className="font-weight-lighter small">*/}
-                    {/*                <ul>{*/}
-                    {/*                    item.properties.map((property , ids)=> (<li key={ids}>{property}</li>))*/}
-                    {/*                }</ul>*/}
 
-                    {/*            </td>*/}
-                    {/*            <td className="font-weight-light">{item.type}</td>*/}
-                    {/*        </tr>*/}
-                    {/*    )*/}
-                    {/*})}*/}
+                    {functionItems.map((item, idx) => {
+                        return (
+                            <tr key={idx}>
+                                <td className="font-weight-light">{item.methodName}</td>
+                                <td className="font-weight-lighter small">
+                                    <ul>{
+                                        item.input.map((inputs , ids)=> (<li key={ids}>{inputs.argumentName}</li>))
+                                    }</ul>
+
+                                </td>
+                                <td className="font-weight-lighter small">
+                                    <ul>{
+                                        item.output.map((outputs , ids)=> (<li key={ids}>{outputs.argumentName}</li>))
+                                    }</ul>
+
+                                </td>
+                            </tr>
+                        )
+                    })}
                     </tbody>
                 </table>
             </div>
