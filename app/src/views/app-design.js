@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useInput} from "../hooks/input-hook";
-import EntityList from "../components/entity-list";
 import EntityAppList from "../components/entity-app-list";
 
 const AppDesign = () => {

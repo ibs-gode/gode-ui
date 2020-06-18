@@ -1,31 +1,64 @@
 import React, {useEffect, useRef} from 'react';
 import {useInput} from "../hooks/input-hook";
 
-const EntityState = (props) => {
+
+
+
+const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => {
 
     const refStateChild = useRef();
     const refStateSpan = useRef();
     const refState = useRef();
-    const {value: volatileEntity, bind: bindVolatileEntity} = useInput('');
-    const {value: asyncStore, bind: bindAsyncStore} = useInput('');
-    const {value: cached, bind: bindCached} = useInput('');
-    const {value: storeName, bind: bindStoreName} = useInput('');
-    const {value: read, bind: bindRead} = useInput('');
-    const {value: write, bind: bindWrite} = useInput('');
-    const {value: relativeRead, bind: bindRelativeRead} = useInput('');
-    const {value: asyncRead, bind: bindAsyncRead} = useInput('');
-    const {value: transactional, bind: bindTransactional} = useInput('');
+    const {value: volatileEntity, bind: bindVolatileEntity, reset: resetVolatileEntity} = useInput('');
+    const {value: asyncStore, bind: bindAsyncStore, reset: resetAsyncStore} = useInput('');
+    const {value: cached, bind: bindCached, reset:resetCached} = useInput('');
+    const {value: storeName, bind: bindStoreName, reset:resetStoreName} = useInput('');
+    const {value: read, bind: bindRead, reset: resetRead} = useInput('');
+    const {value: write, bind: bindWrite, reset: resetWrite} = useInput('');
+    const {value: relativeRead, bind: bindRelativeRead, reset: resetRelativeRead} = useInput('');
+    const {value: asyncRead, bind: bindAsyncRead,  reset: resetAsyncRead} = useInput('');
+    const {value: transactional, bind: bindTransactional, reset: resetTransactional} = useInput('');
 
     useEffect(() => {
         if (volatileEntity === "True" || volatileEntity === "") {
             refStateChild.current.hidden = true;
             refStateSpan.current.hidden = true;
-
         } else if (volatileEntity === "False") {
             refStateChild.current.hidden = false;
             refStateSpan.current.hidden = false;
         }
     }, [volatileEntity]);
+
+    useEffect(
+        () => {
+              if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
+                resetFormComponents();
+              }
+        },
+        [fields,idField,entityState]
+      );
+
+    const resetFormComponents=() => {
+        resetVolatileEntity();
+        resetAsyncStore();
+        resetAsyncRead();
+        resetCached();
+        resetRead();
+        resetRelativeRead();
+        resetStoreName();
+        resetTransactional();
+        resetVolatileEntity();
+        resetWrite();
+    };
+    const booleanConvert = (str) => {
+        if (str === "True") {
+            return true;
+        } else if (str === "False") {
+            return false;
+        } else {
+            return "";
+        }
+    };
 
     const handleSaveState = (e) => {
         e.preventDefault();
@@ -60,19 +93,8 @@ const EntityState = (props) => {
                 }
             }
         }
-        props.callbackFromEntityState(data);
-        //refState.current.disabled = true;
-    };
+        callbackFromEntityState(data);
 
-
-    const booleanConvert = (str) => {
-        if (str === "True") {
-            return true;
-        } else if (str === "False") {
-            return false;
-        } else {
-            return "";
-        }
     };
 
     return (
