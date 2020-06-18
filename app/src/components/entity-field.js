@@ -21,11 +21,11 @@ const EntityField = ({callbackFromEntity, fields,idField}) => {
 
     useEffect(
         () => {
-            if(fields.length==0 && fieldItems.length>0 && !idField.hasOwnProperty("type")){
+            if(fields.length === 0 && fieldItems.length>0 && !idField.hasOwnProperty("type")){
                 setFieldItems([]);
               }
         },
-        [fields,idField]
+        [fields,idField,fields.length, fieldItems.length]
       );
 
     const saveEntityField = () => {

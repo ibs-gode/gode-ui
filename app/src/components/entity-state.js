@@ -31,7 +31,7 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
 
     useEffect(
         () => {
-            if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
+            if(fields.length === 0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
                 resetFormComponents();
               }
         },
@@ -107,14 +107,22 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
                     State
                 </button>
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" ref={refState}>
-                    <div className="form-group">
+                    <div className="form-group row">
+                        <div className="col-1">
                         <label>Volatile</label><span className="required">*</span>
-                        <select className="form-control-sm ml-3"  {...bindVolatileEntity}>
+                        </div>
+                        <div className=" col-sm-auto pl-1">
+                        <select className="form-control form-control-sm "  {...bindVolatileEntity}>
                             <option value="" hidden>Select</option>
                             <option value="True">Yes</option>
                             <option value="False">No</option>
-                        </select><span ref={refStateSpan} className="small font-italic home-font-colour ml-3">Please provide either Entity State Store details or Operations Level details</span>
-                    </div>
+                        </select>
+                        </div>
+                    <div className="col ml-1">
+                        <span ref={refStateSpan} className="small font-italic home-font-colour ml-3">
+                            Please provide either Entity State Store details or Operations Level details
+                        </span>
+                    </div></div>
                     <div className="form-row" ref={refStateChild}>
                         <div>
                             <label className="font-weight-lighter">Entity State Store</label>

@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 
 const EntityAppList = (props) => {
 
+    const refSelect = useRef();
     const [labelText, setLabelText] = useState('');
     const [artifactId, setArtifactId] = useState('');
     const [selectedList, setSelectedList] = useState([]);
@@ -18,7 +19,7 @@ const EntityAppList = (props) => {
         }
 
         fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
-    }, []);
+    }, [props.type, props.label]);
 
     const handleAddObjectOnSubmit = (e) => {
         e.preventDefault();
@@ -31,6 +32,7 @@ const EntityAppList = (props) => {
         };
         setSelectedList(dataWithLabel);
         props.callBackFunction(dataOnlyArtifactId);
+        refSelect.current.value = "";
     };
 
     const saveObject = (event) => {
@@ -48,8 +50,8 @@ const EntityAppList = (props) => {
                         className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add
                 </button>
                 <div className="form-group mr-3">
-                    <select className="form-control" onChange={saveObject}>
-                        <option value="" hidden>Select</option>
+                    <select ref={refSelect} className="form-control" onChange={saveObject}>
+                        <option value="" defaultValue>Select {props.label}</option>
                         {dataList.map((data, ids) => (<option key={ids} value={data.artifactId}>{data.label}</option>))}
                     </select>
                 </div>
@@ -64,7 +66,7 @@ const EntityAppList = (props) => {
                         {selectedList.map((item, idx) => {
                             return (
                                 <tr key={idx}>
-                                    <td className="font-weight-light">{item.label}</td>
+                                    <td className="font-weight-light small">{item.label}</td>
                                 </tr>
                             )
                         })}
