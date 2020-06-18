@@ -4,7 +4,7 @@ import {useInput} from "../hooks/input-hook";
 
 
 
-const EntityState = ({callbackFromEntityState, reset}) => {
+const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => {
 
     const refStateChild = useRef();
     const refStateSpan = useRef();
@@ -31,11 +31,11 @@ const EntityState = ({callbackFromEntityState, reset}) => {
 
     useEffect(
         () => {
-              if(reset){
+            if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
                 resetFormComponents();
               }
         },
-        [reset]
+        [fields,idField,entityState]
       );
 
     const resetFormComponents=() => {

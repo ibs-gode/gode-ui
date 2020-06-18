@@ -3,7 +3,7 @@ import EntityRelationship from "./entity-relationship";
 import EntityObject from "./entity-object";
 import {useInput} from "../hooks/input-hook";
 
-const EntityField = ({callbackFromEntity, reset}) => {
+const EntityField = ({callbackFromEntity, fields,idField}) => {
 
     const refProp1 = useRef();
     const refProp2 = useRef();
@@ -21,11 +21,11 @@ const EntityField = ({callbackFromEntity, reset}) => {
 
     useEffect(
         () => {
-              if(reset){
+            if(fields.length==0 && fieldItems.length>0 && !idField.hasOwnProperty("type")){
                 setFieldItems([]);
               }
         },
-        [reset]
+        [fields,idField]
       );
 
     const saveEntityField = () => {
