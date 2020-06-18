@@ -1,6 +1,7 @@
 import React from 'react';
 import Notifications from "react-notify-toast";
 import EntityDesign from './entity-design'
+import AppDesign from "./app-design";
 
 const HomePage = () => {
 
@@ -32,10 +33,10 @@ const HomePage = () => {
                         <div className="card-body">
                             <div className="tab-content mt-3">
                                 <div className="tab-pane active" id="entity-design" >
-                                    <EntityDesign></EntityDesign>
+                                    <EntityDesign/>
                                 </div>
                                 <div className="tab-pane" id="appDesign"  aria-labelledby="app-design-tab">
-
+                                    <AppDesign/>
                                 </div>
                                 <div className="tab-pane" id="app-build"  aria-labelledby="app-build-tab"></div>
                                 <div className="tab-pane" id="app-deploy"  aria-labelledby="app-deploy-tab"></div>

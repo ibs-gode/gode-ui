@@ -45,7 +45,7 @@ const EntityDesign = () => {
                 },
                 "data":data})
           }
-          
+
         fetch(MyConfig.apiBaseUrl+ MyConfig.createEntityURI,requestOpt).then(resp =>{
             console.log(resp);
             switch (resp.status) {
@@ -69,7 +69,7 @@ const EntityDesign = () => {
             }
           })
     }
-    
+
     const entityStateCallback = (dataFromEntityState) => {
         console.log(JSON.stringify(dataFromEntityState));
             setEntityState(dataFromEntityState);
