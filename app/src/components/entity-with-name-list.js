@@ -11,16 +11,17 @@ const EntityWithNameList = (props) => {
     const [dataList, setDataList] = useState([]);
     const {value: argName, bind: bindArgName, reset: resetArgName} = useInput('');
 
-    useEffect(() => {
-        async function fetchData() {
-            // You can await here
-            const response = await axios(
-                'http://localhost:9001/artifact/brief?type=ENTITY',
-            );
-            setDataList(response.data.data);
-            console.log(JSON.stringify(response.data.data))
-        }
 
+    async function fetchData() {
+        // You can await here
+        const response = await axios(
+            'http://localhost:9001/artifact/brief?type=ENTITY',
+        );
+        setDataList(response.data.data);
+        console.log(JSON.stringify(response.data.data))
+    }
+
+    useEffect(() => {
         fetchData().then(r => console.log("Entity with Argument name fetched successfully for "+ props.label));
     }, [props.type, props.label]);
 
@@ -29,6 +30,11 @@ const EntityWithNameList = (props) => {
             setSelectedList([]);
         }
     },[props.clearTable]);
+
+    const getEntityList=() => {
+        fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
+    };
+
 
     const handleAddObjectOnSubmit = (e) => {
         e.preventDefault();
@@ -64,7 +70,7 @@ const EntityWithNameList = (props) => {
                 </button>
                 <div className="form-row">
                     <div className="form-group mr-3">
-                        <select className="form-control form-control-sm border"  onChange={saveObject} ref={refEntityList}>
+                        <select className="form-control form-control-sm border" onClick={getEntityList} onChange={saveObject} ref={refEntityList}>
                             <option value="" defaultValue="">Select Entity</option>
                             {dataList.map((data, ids) => (<option key={ids} value={data.artifactId}>{data.label}</option>))}
                         </select>
