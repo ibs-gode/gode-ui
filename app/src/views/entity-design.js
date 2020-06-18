@@ -7,6 +7,7 @@ import { MyConfig } from '../config/config';
 
 const EntityDesign = () => {
 
+    const [isEntityDesignReset, setIsEntityDesignReset] = useState(false);
     const [idField, setIdField] = useState({});
     const [fields, setFields] = useState([]);
     const [entityState, setEntityState] = useState({});
@@ -59,12 +60,15 @@ const EntityDesign = () => {
                     setIdField({})
                     setEntityState({});
                     data = {};
+                    setIsEntityDesignReset(true);
                     break;
                 case 400:
                     HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                    setIsEntityDesignReset(false);
                     break;
                 default:
                     HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                    setIsEntityDesignReset(false);
                     break;
             }
           })
@@ -108,10 +112,10 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityState callbackFromEntityState={entityStateCallback} fields={fields} idField={idField} entityState={entityState}/>
+                <EntityState callbackFromEntityState={entityStateCallback} reset={isEntityDesignReset}/>
             </div>
             <div>
-                <EntityField callbackFromEntity={entityFieldCallback} fields={fields} idField={idField}/>
+                <EntityField callbackFromEntity={entityFieldCallback} reset={isEntityDesignReset}/>
             </div>
 
             <button type="submit"

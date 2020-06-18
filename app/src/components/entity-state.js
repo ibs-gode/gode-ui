@@ -4,7 +4,7 @@ import {useInput} from "../hooks/input-hook";
 
 
 
-const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => {
+const EntityState = ({callbackFromEntityState, reset}) => {
 
     const refStateChild = useRef();
     const refStateSpan = useRef();
@@ -31,11 +31,11 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
 
     useEffect(
         () => {
-              if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
+              if(reset){
                 resetFormComponents();
               }
         },
-        [fields,idField,entityState]
+        [reset]
       );
 
     const resetFormComponents=() => {
@@ -49,6 +49,7 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
         resetTransactional();
         resetVolatileEntity();
         resetWrite();
+        refState.current.disabled = false;
     };
     const booleanConvert = (str) => {
         if (str === "True") {
@@ -94,6 +95,7 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
             }
         }
         callbackFromEntityState(data);
+        refState.current.disabled = true;
 
     };
 
