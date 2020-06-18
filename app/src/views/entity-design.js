@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import EntityField from "../components/entity-field";
 import {useInput} from "../hooks/input-hook";
 import EntityState from "../components/entity-state";
+import { HandleToastMessage, StatusEnum } from '../common/utils';
+import { MyConfig } from '../config/config';
 
 const EntityDesign = () => {
 
@@ -27,10 +29,47 @@ const EntityDesign = () => {
     const handleEntityDesignSubmit = (e) => {
         e.preventDefault();
         console.log("nope" + JSON.stringify(data));
-        data = {};
-        //window.location.reload();
+        postEntityData(data);
     };
 
+    const postEntityData=(data) =>{
+        const requestOpt ={
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "context": {
+                  "handle": "string"
+                },
+                "data":data})
+          }
+          
+        fetch(MyConfig.apiBaseUrl+ MyConfig.createEntityURI,requestOpt).then(resp =>{
+            console.log(resp);
+            switch (resp.status) {
+                case 200:
+                    HandleToastMessage("Entity has been created.",StatusEnum.SUCCESS);
+                    resetEntityName();
+                    resetEntityDesc();
+                    resetEntityVersion();
+                    resetEntityArtifactID();
+                    setFields([]);
+                    setIdField({})
+                    setEntityState({});
+                    data = {};
+                    break;
+                case 400:
+                    HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                    break;
+                default:
+                    HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                    break;
+            }
+          })
+    }
+    
     const entityStateCallback = (dataFromEntityState) => {
         console.log(JSON.stringify(dataFromEntityState));
             setEntityState(dataFromEntityState);
@@ -69,10 +108,10 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityState callbackFromEntityState={entityStateCallback}/>
+                <EntityState callbackFromEntityState={entityStateCallback} fields={fields} idField={idField} entityState={entityState}/>
             </div>
             <div>
-                <EntityField callbackFromEntity={entityFieldCallback}/>
+                <EntityField callbackFromEntity={entityFieldCallback} fields={fields} idField={idField}/>
             </div>
 
             <button type="submit"
