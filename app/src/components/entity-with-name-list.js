@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import {useInput} from "../hooks/input-hook";
+import {MyConfig} from "../config/config";
 
 const EntityWithNameList = (props) => {
 
@@ -15,15 +16,11 @@ const EntityWithNameList = (props) => {
     async function fetchData() {
         // You can await here
         const response = await axios(
-            'http://localhost:9001/artifact/brief?type=ENTITY',
+            MyConfig.apiBaseUrl+ MyConfig.fetchEntityApp+'?type=ENTITY',
         );
         setDataList(response.data.data);
         console.log(JSON.stringify(response.data.data))
     }
-
-    useEffect(() => {
-        fetchData().then(r => console.log("Entity with Argument name fetched successfully for "+ props.label));
-    }, [props.type, props.label]);
 
     useEffect(() => {
         if(props.clearTable === "YES"){
@@ -32,7 +29,7 @@ const EntityWithNameList = (props) => {
     },[props.clearTable]);
 
     const getEntityList=() => {
-        fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
+        fetchData().then(r => console.log("Entities fetched successfully for "+ props.label));
     };
 
 

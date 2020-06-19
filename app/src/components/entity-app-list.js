@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
+import {MyConfig} from "../config/config";
 
 const EntityAppList = (props) => {
 
@@ -10,24 +11,11 @@ const EntityAppList = (props) => {
     const [dataList, setDataList] = useState([]);
 
 
-
-    useEffect(() => {
-        async function fetchData() {
-            // You can await here
-            const response = await axios(
-                'http://localhost:9001/artifact/brief?type='+props.type
-            );
-            setDataList(response.data.data);
-        }
-        fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
-    }, [props.type, props.label]);
-
-
     const getEntityList=() => {
         async function fetchData() {
             // You can await here
             const response = await axios(
-                'http://localhost:9001/artifact/brief?type='+props.type
+                MyConfig.apiBaseUrl+ MyConfig.fetchEntityApp+'?type='+props.type
             );
             setDataList(response.data.data);
         }
