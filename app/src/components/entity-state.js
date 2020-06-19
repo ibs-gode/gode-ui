@@ -31,26 +31,22 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
 
     useEffect(
         () => {
-            if(fields.length === 0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
-                resetFormComponents();
-              }
+            if (fields.length === 0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")) {
+                resetVolatileEntity();
+                resetAsyncStore();
+                resetAsyncRead();
+                resetCached();
+                resetRead();
+                resetRelativeRead();
+                resetStoreName();
+                resetTransactional();
+                resetWrite();
+                refState.current.disabled = false;
+            }
         },
-        [fields,idField,entityState]
-      );
+        [fields, idField, entityState, resetVolatileEntity, resetAsyncStore, resetAsyncRead, resetCached, resetRead, resetRelativeRead, resetStoreName, resetTransactional, resetWrite, refState]
+    );
 
-    const resetFormComponents=() => {
-        resetVolatileEntity();
-        resetAsyncStore();
-        resetAsyncRead();
-        resetCached();
-        resetRead();
-        resetRelativeRead();
-        resetStoreName();
-        resetTransactional();
-        resetVolatileEntity();
-        resetWrite();
-        refState.current.disabled = false;
-    };
     const booleanConvert = (str) => {
         if (str === "True") {
             return true;

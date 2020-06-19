@@ -9,19 +9,28 @@ const EntityAppList = (props) => {
     const [selectedList, setSelectedList] = useState([]);
     const [dataList, setDataList] = useState([]);
 
-    async function fetchData() {
-        // You can await here
-        const response = await axios(
-            'http://localhost:9001/artifact/brief?type='+props.type
-        );
-        setDataList(response.data.data);
-    }
+
 
     useEffect(() => {
+        async function fetchData() {
+            // You can await here
+            const response = await axios(
+                'http://localhost:9001/artifact/brief?type='+props.type
+            );
+            setDataList(response.data.data);
+        }
         fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
     }, [props.type, props.label]);
 
+
     const getEntityList=() => {
+        async function fetchData() {
+            // You can await here
+            const response = await axios(
+                'http://localhost:9001/artifact/brief?type='+props.type
+            );
+            setDataList(response.data.data);
+        }
         fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
     };
 
