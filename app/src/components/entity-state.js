@@ -44,7 +44,7 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
                 refState.current.disabled = false;
             }
         },
-        [fields, idField, entityState, resetVolatileEntity, resetAsyncStore, resetAsyncRead, resetCached, resetRead, resetRelativeRead, resetStoreName, resetTransactional, resetWrite, refState]
+        [fields, idField, entityState]
     );
 
     const booleanConvert = (str) => {
