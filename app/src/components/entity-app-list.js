@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 
-const CustomDropDown = (props) => {
+const EntityAppList = (props) => {
 
-    const [depLabel, setDepLabel] = useState('');
-    const [depArtifactId, setDepArtifactId] = useState('');
-    const [dependencies, setDependencies] = useState([]);
-    const [entityFetch, setEntityFetch] = useState([]);
+    const refSelect = useRef();
+    const [labelText, setLabelText] = useState('');
+    const [artifactId, setArtifactId] = useState('');
+    const [selectedList, setSelectedList] = useState([]);
+    const [dataList, setDataList] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -14,26 +15,30 @@ const CustomDropDown = (props) => {
             const response = await axios(
                 'http://localhost:9001/artifact/brief?type='+props.type,
             );
-            console.log("i am here")
-            console.log(JSON.stringify(response));
-            setEntityFetch(response.data.data);
+            setDataList(response.data.data);
         }
 
-        fetchData();
-    }, []);
+        fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
+    }, [props.type, props.label]);
 
-    const handleAddDependencySubmit = (e) => {
+    const handleAddObjectOnSubmit = (e) => {
         e.preventDefault();
-        setDependencies([...dependencies, {
-            artifactId: depArtifactId,
-            label: depLabel
-        }]);
+        const dataWithLabel=[...selectedList, {
+            artifactId: artifactId,
+            label: labelText
+        }];
+        const dataOnlyArtifactId =  {
+            artifactId: artifactId
+        };
+        setSelectedList(dataWithLabel);
+        props.callBackFunction(dataOnlyArtifactId);
+        refSelect.current.value = "";
     };
 
-    const saveDependency = (event) => {
+    const saveObject = (event) => {
         event.preventDefault();
-        setDepLabel(event.target.options[event.target.selectedIndex].text);
-        setDepArtifactId(event.target.value);
+        setLabelText(event.target.options[event.target.selectedIndex].text);
+        setArtifactId(event.target.value);
     };
 
 
@@ -41,13 +46,13 @@ const CustomDropDown = (props) => {
         <div>
             <fieldset className="form-group border border-secondary pl-3 pt-1 rounded">
                 <label>{props.label}</label><span className="required">*</span>
-                <button type="submit" onClick={handleAddDependencySubmit}
+                <button type="submit" onClick={handleAddObjectOnSubmit}
                         className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add
                 </button>
                 <div className="form-group mr-3">
-                    <select className="form-control" onChange={saveDependency}>
-                        <option value="" hidden>Select</option>
-                        {entityFetch.map(data => (<option value={data.artifactId}>{data.label}</option>))}
+                    <select ref={refSelect} className="form-control" onChange={saveObject}>
+                        <option value="" defaultValue>Select {props.label}</option>
+                        {dataList.map((data, ids) => (<option key={ids} value={data.artifactId}>{data.label}</option>))}
                     </select>
                 </div>
                 <div className="mr-3">
@@ -58,10 +63,10 @@ const CustomDropDown = (props) => {
                         </tr>
                         </thead>
                         <tbody>
-                        {dependencies.map((item, idx) => {
+                        {selectedList.map((item, idx) => {
                             return (
                                 <tr key={idx}>
-                                    <td className="font-weight-light">{item.label}</td>
+                                    <td className="font-weight-light small">{item.label}</td>
                                 </tr>
                             )
                         })}
@@ -74,4 +79,4 @@ const CustomDropDown = (props) => {
     );
 };
 
-export default CustomDropDown;
+export default EntityAppList;

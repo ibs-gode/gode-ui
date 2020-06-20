@@ -23,7 +23,6 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
         if (volatileEntity === "True" || volatileEntity === "") {
             refStateChild.current.hidden = true;
             refStateSpan.current.hidden = true;
-
         } else if (volatileEntity === "False") {
             refStateChild.current.hidden = false;
             refStateSpan.current.hidden = false;
@@ -50,11 +49,12 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
         resetTransactional();
         resetVolatileEntity();
         resetWrite();
-    }
-    const booleanConvert = (strr) => {
-        if (strr === "True") {
+        refState.current.disabled = false;
+    };
+    const booleanConvert = (str) => {
+        if (str === "True") {
             return true;
-        } else if (strr === "False") {
+        } else if (str === "False") {
             return false;
         } else {
             return "";
@@ -94,9 +94,9 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
                 }
             }
         }
-        console.log(data)
         callbackFromEntityState(data);
-       
+        refState.current.disabled = true;
+
     };
 
     return (
@@ -106,14 +106,22 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
                  
                
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" ref={refState}>
-                    <div className="form-group">
+                    <div className="form-group row">
+                        <div className="col-1">
                         <label>Volatile</label><span className="required">*</span>
-                        <select className="form-control-sm ml-3"  {...bindVolatileEntity}>
+                        </div>
+                        <div className=" col-sm-auto pl-1">
+                        <select className="form-control form-control-sm "  {...bindVolatileEntity}>
                             <option value="" hidden>Select</option>
                             <option value="True">Yes</option>
                             <option value="False">No</option>
-                        </select><span ref={refStateSpan} className="small font-italic home-font-colour ml-3">Please provide either Entity State Store details or Operations Level details</span>
-                    </div>
+                        </select>
+                        </div>
+                    <div className="col ml-1">
+                        <span ref={refStateSpan} className="small font-italic home-font-colour ml-3">
+                            Please provide either Entity State Store details or Operations Level details
+                        </span>
+                    </div></div>
                     <div className="form-row" ref={refStateChild}>
                         <div>
                             <label className="font-weight-lighter">Entity State Store</label>
