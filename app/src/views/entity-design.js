@@ -84,6 +84,15 @@ const EntityDesign = () => {
         }
     };
 
+    const isValidReset=(fields, idField, entityState)=>{
+        if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     return (
         <form onSubmit={handleEntityDesignSubmit}>
             <div className="form-row ">
@@ -108,10 +117,10 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityState callbackFromEntityState={entityStateCallback} fields={fields} idField={idField} entityState={entityState}/>
+                <EntityState callbackFromEntityState={entityStateCallback} isReset={isValidReset(fields, idField, entityState)} />
             </div>
             <div>
-                <EntityField callbackFromEntity={entityFieldCallback} fields={fields} idField={idField}/>
+                <EntityField callbackFromEntity={entityFieldCallback} isReset={isValidReset(fields, idField, entityState)}/>
             </div>
 
             <button type="submit"
