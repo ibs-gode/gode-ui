@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import axios from "axios";
 import {useInput} from "../hooks/input-hook";
 import {MyConfig} from "../config/config";
@@ -11,8 +11,6 @@ const AppDeploy = () => {
     const [requirementData, setRequirementData] = useState({});
     const [requirementDataOutput, setRequirementDataOutput] = useState({});
     const {value: deployType, bind: bindDeployType, reset: resetDeployType} = useInput('');
-
-
 
     const getEntityList=() => {
         async function fetchData() {
@@ -32,6 +30,7 @@ const AppDeploy = () => {
 
     const handleRequirementSubmit = (e) => {
         e.preventDefault();
+        //Hardcoding data to test. Need to read value from artifactId and deployType variables
         const data = {
                 "app": {
                     "name": "CustomerCare",
@@ -63,8 +62,6 @@ const AppDeploy = () => {
                 setRequirementData(data);
             });
     };
-
-
 
     const bindValue = (e) => {
         setRequirementDataOutput({
