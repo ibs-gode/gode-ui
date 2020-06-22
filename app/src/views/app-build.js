@@ -5,6 +5,7 @@ import SelectEntityState from '../components/select-entity-state';
 import axios from 'axios';
 import { HandleToastMessage, StatusEnum } from '../common/utils';
 import { MyConfig } from '../config/config';
+import { trackPromise } from 'react-promise-tracker';
 
 export default class AppBuild extends React.Component {
 
@@ -16,19 +17,37 @@ export default class AppBuild extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.callBackFunactionForEntityList = this.callBackFunactionForEntityList.bind(this);
         this.fetchAppData = this.fetchAppData.bind(this);
+        this.buildAppAction = this.buildAppAction.bind(this);
+        this.resetForm = this.resetForm.bind(this);
         this.state ={
             appObj: Object.assign({}, {artifactPackaging:""}),
             errors: {},
             selectedAppData: {},
-            appDatas:[]            
+            appDatas:[] ,
+            entityStorePref:[]           
         }
         
     }
 
+    resetForm(){
+        this.setState({
+            appObj: Object.assign({}, {artifactPackaging:""}),
+            errors: {},
+            selectedAppData: {},
+            appDatas:[] ,
+            entityStorePref:[] ,
+            resetEntitiesStatePref:true         
+        });
+
+        this.setState({
+            resetEntitiesStatePref:false
+        });
+    }
     handleChange(e) {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+        console.log(name,value);
         this.setState((prevState) => {
           prevState.appObj[name] = value;
           return { appObj: prevState.appObj };
@@ -53,10 +72,10 @@ export default class AppBuild extends React.Component {
     }
 
     callBackFunactionForEntityList(data){
-        console.log(data);
-            this.setState({selectedAppData:{
+        console.log("entistae",data);
+            this.setState({
                 entityStorePref:data
-            }});
+            });
     }
     
     buildAppAction = (evnt) =>{
@@ -67,16 +86,17 @@ export default class AppBuild extends React.Component {
             },
             "data": {
                 "app": {
-                    "artifactId":this.state.appDatas["artifactId"],
+                    "artifactId":this.state.appObj["artifactId"],
                 },
-                artifactPackaging:this.state.appDatas["artifactPackaging"],
-                entityStorePref:this.state.selectedAppData.entityStorePref,
-                progLanguage:this.state.appDatas["progLanguage"],
-                secure:this.state.appDatas["secure"],
-                systemQueue:this.state.appDatas["systemQueue"]
+                artifactPackaging:this.state.appObj["artifactPackaging"],
+                entityStorePref:this.state.entityStorePref,
+                progLanguage:this.state.appObj["progLanguage"],
+                secure:this.state.appObj["secure"],
+                systemQueue:this.state.appObj["systemQueue"]
             }
         }
-
+        console.log(data,this.state.appObj["artifactId"]);
+    
         const requestOpt ={
             method: 'POST',
             headers: {
@@ -85,13 +105,14 @@ export default class AppBuild extends React.Component {
             },
             body: JSON.stringify(data)
           }
-          
+          console.log(requestOpt);
+          trackPromise(
         fetch(MyConfig.apiBaseUrl+ MyConfig.appBuildUri,requestOpt).then(resp =>{
             console.log(resp);
             switch (resp.status) {
                 case 200:
                     HandleToastMessage("App has been build.",StatusEnum.SUCCESS);
-                    
+                    this.resetForm()
                     data = {};
                     break;
                 case 400:
@@ -102,9 +123,10 @@ export default class AppBuild extends React.Component {
                     break;
             }
           })
-
+          );    
 
     }
+    
 
     render() {
         return (
@@ -112,7 +134,7 @@ export default class AppBuild extends React.Component {
                 <div className="form-row ">
                     <div className="form-group col-md-12">
                         <label>App</label><span className="required">*</span>
-                    <select className="form-control" onChange={this.handleChange} value={this.state.appObj["artifactId"]}>
+                    <select className="form-control"  name="artifactId" onChange={this.handleChange} value={this.state.appObj["artifactId"]}>
                         <option value="" hidden>Select</option>
                         
                           {this.state.appDatas.map((item,idx) => {
@@ -135,7 +157,7 @@ export default class AppBuild extends React.Component {
                     <label>Language</label><span className="required">*</span>
                         <select className="form-control-sm ml-3" onChange={this.handleChange} name ="progLanguage" value={this.state.appObj.progLanguage}>
                             <option value="" hidden>Select</option>
-                            <option value="Java">Java</option>
+                            <option value="JAVA">Java</option>
                     
                         </select>
                     </div>
@@ -162,7 +184,7 @@ export default class AppBuild extends React.Component {
                         </div>
                     </div>
                     <div className="form-row ">
-                        <SelectEntityState label="Entities" callBackFunactionForEntityList={this.callBackFunactionForEntityList}></SelectEntityState>
+                        <SelectEntityState label="Entities" callBackFunactionForEntityList={this.callBackFunactionForEntityList} isReset={this.state.resetEntitiesStatePref}></SelectEntityState>
                     
                     </div>
                 <button type="submit"

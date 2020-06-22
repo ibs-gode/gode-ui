@@ -21,6 +21,12 @@ export default class SelectEntityState extends React.Component {
         this.fetchEntityData();
     }
 
+    componentDidUpdate(prevProps){
+        if(this.props.isReset && this.props.isReset !== prevProps.isReset) 
+        {
+            this.setState({addedEntities: []});
+        }
+    }
     
     
 
@@ -38,14 +44,15 @@ export default class SelectEntityState extends React.Component {
     }
 
     stateCallBackFunction(data){
-        this.setState({addedEntities: [...this.state.addedEntities,{
+        let addedEntitiesArr = [...this.state.addedEntities,{
             entity:this.state.selectedEntity,
             state:data
-        }]});
+        }]
+        this.setState({addedEntities: addedEntitiesArr});
         console.log(data);
         this.setState({selectedEntity:{artifactId:""},resetEntityState:true});
         this.state.resetEntityState=false;
-        this.props.callBackFunactionForEntityList(this.state.addedEntities);
+        this.props.callBackFunactionForEntityList(addedEntitiesArr);
 
     }
 
@@ -65,7 +72,7 @@ export default class SelectEntityState extends React.Component {
              <fieldset className="form-group border border-secondary pl-3 pt-1 rounded">
              <label>{this.props.label}</label><span className="required">*</span>
              <div className="form-group mr-3">
-                    <select className="form-control" onChange={this.saveDependency} value={this.state.selectedEntity.artifactId}>
+                    <select className="form-control" name="artifactId" onChange={this.saveDependency} value={this.state.selectedEntity.artifactId}>
                         <option value="" hidden>Select</option>
                         
                           {entitiesData.map((item,idx) => {
