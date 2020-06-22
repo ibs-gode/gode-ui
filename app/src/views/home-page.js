@@ -3,6 +3,7 @@ import Notifications from "react-notify-toast";
 import EntityDesign from './entity-design'
 import AppDesign from "./app-design";
 import AppBuild from './app-build';
+import AppDeploy from "./app-deploy";
 
 const HomePage = () => {
 
@@ -42,7 +43,9 @@ const HomePage = () => {
                                 <div className="tab-pane" id="app-build"  aria-labelledby="app-build-tab">
                                     <AppBuild></AppBuild>
                                 </div>
-                                <div className="tab-pane" id="app-deploy"  aria-labelledby="app-deploy-tab"></div>
+                                <div className="tab-pane" id="app-deploy"  aria-labelledby="app-deploy-tab">
+                                    <AppDeploy/>
+                                </div>
                                 <div className="tab-pane" id="api-docs" aria-labelledby="api-docs-tab"></div>
                             </div>
                         </div>

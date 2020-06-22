@@ -1,5 +1,8 @@
-
-export const MyConfig = {  apiBaseUrl: 'http://localhost:9001',
-createEntityURI: '/artifact/entity',
-appBuildUri:'/generator/build',
-appDesignURI: '/generator/design' };
+export const MyConfig = {
+    apiBaseUrl: 'http://localhost:9001',
+    createEntityURI: '/artifact/entity',
+    appDesignURI: '/generator/design',
+    appBuildUri:'/generator/build',
+    appRequirement: '/generator/deploy/requirement',
+    fetchEntityApp: '/artifact/brief'
+};

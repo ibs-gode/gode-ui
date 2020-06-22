@@ -1,5 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import axios from 'axios';
+import {MyConfig} from "../config/config";
 
 const EntityAppList = (props) => {
 
@@ -9,17 +10,17 @@ const EntityAppList = (props) => {
     const [selectedList, setSelectedList] = useState([]);
     const [dataList, setDataList] = useState([]);
 
-    useEffect(() => {
+
+    const getEntityList=() => {
         async function fetchData() {
             // You can await here
             const response = await axios(
-                'http://localhost:9001/artifact/brief?type='+props.type,
+                MyConfig.apiBaseUrl+ MyConfig.fetchEntityApp+'?type='+props.type
             );
             setDataList(response.data.data);
         }
-
         fetchData().then(r => console.log(props.type+" fetched successfully for "+ props.label));
-    }, [props.type, props.label]);
+    };
 
     const handleAddObjectOnSubmit = (e) => {
         e.preventDefault();
@@ -50,7 +51,7 @@ const EntityAppList = (props) => {
                         className="btn btn-info btn-sm ml-3 mb-3 mt-3 "> Add
                 </button>
                 <div className="form-group mr-3">
-                    <select ref={refSelect} className="form-control" onChange={saveObject}>
+                    <select ref={refSelect} className="form-control" onClick={getEntityList} onChange={saveObject}>
                         <option value="" defaultValue>Select {props.label}</option>
                         {dataList.map((data, ids) => (<option key={ids} value={data.artifactId}>{data.label}</option>))}
                     </select>

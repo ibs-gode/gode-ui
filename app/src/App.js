@@ -14,7 +14,7 @@ const App = () => {
                 <div>
                     <div className="col-12">
                         <header className="py-4 app-header">
-                            <h1 className="text-white">GOD(E)</h1>
+                            <h1 className="text-white font-weight-bolder">GOD(E)</h1>
                         </header>
                     </div>
                 </div>

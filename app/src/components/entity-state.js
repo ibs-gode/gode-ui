@@ -32,25 +32,21 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
     useEffect(
         () => {
               if(isReset){
-                resetFormComponents();
+                resetVolatileEntity();
+                resetAsyncStore();
+                resetAsyncRead();
+                resetCached();
+                resetRead();
+                resetRelativeRead();
+                resetStoreName();
+                resetTransactional();
+                resetWrite();
+                refState.current.disabled = false;
               }
         },
         [isReset]
-      );
+        );
 
-    const resetFormComponents=() => {
-        resetVolatileEntity();
-        resetAsyncStore();
-        resetAsyncRead();
-        resetCached();
-        resetRead();
-        resetRelativeRead();
-        resetStoreName();
-        resetTransactional();
-        resetVolatileEntity();
-        resetWrite();
-        refState.current.disabled = false;
-    };
     const booleanConvert = (str) => {
         if (str === "True") {
             return true;
