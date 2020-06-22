@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import HomePage from './views/home-page.js'
+import LoadingIndicator from './components/LoadingIndicator';
+import Loader from 'react-loader-spinner';
+import { usePromiseTracker } from "react-promise-tracker";
 
 const App = () => {
     return (
@@ -17,6 +20,7 @@ const App = () => {
                 </div>
                 <div className="container py-4 my-3 bg-white border rounded">
                     <HomePage></HomePage>
+                    <LoadingIndicator/>
                     {/*<MainFormComponent></MainFormComponent>*/}
                 </div>
             </div>

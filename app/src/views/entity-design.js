@@ -44,8 +44,8 @@ const EntityDesign = () => {
                   "handle": "string"
                 },
                 "data":data})
-          };
-
+          }
+          
         fetch(MyConfig.apiBaseUrl+ MyConfig.createEntityURI,requestOpt).then(resp =>{
             console.log(resp);
             switch (resp.status) {
@@ -68,8 +68,8 @@ const EntityDesign = () => {
                     break;
             }
           })
-    };
-
+    }
+    
     const entityStateCallback = (dataFromEntityState) => {
         console.log(JSON.stringify(dataFromEntityState));
             setEntityState(dataFromEntityState);
@@ -83,6 +83,15 @@ const EntityDesign = () => {
             setFields([...fields, dataFromEntityDesign])
         }
     };
+
+    const isValidReset=(fields, idField, entityState)=>{
+        if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     return (
         <form onSubmit={handleEntityDesignSubmit}>
@@ -108,10 +117,10 @@ const EntityDesign = () => {
                 </div>
             </div>
             <div>
-                <EntityState callbackFromEntityState={entityStateCallback} fields={fields} idField={idField} entityState={entityState}/>
+                <EntityState callbackFromEntityState={entityStateCallback} isReset={isValidReset(fields, idField, entityState)} />
             </div>
             <div>
-                <EntityField callbackFromEntity={entityFieldCallback} fields={fields} idField={idField}/>
+                <EntityField callbackFromEntity={entityFieldCallback} isReset={isValidReset(fields, idField, entityState)}/>
             </div>
 
             <button type="submit"

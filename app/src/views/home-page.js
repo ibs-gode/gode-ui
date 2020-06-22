@@ -2,6 +2,7 @@ import React from 'react';
 import Notifications from "react-notify-toast";
 import EntityDesign from './entity-design'
 import AppDesign from "./app-design";
+import AppBuild from './app-build';
 import AppDeploy from "./app-deploy";
 
 const HomePage = () => {
@@ -39,7 +40,9 @@ const HomePage = () => {
                                 <div className="tab-pane" id="appDesign"  aria-labelledby="app-design-tab">
                                     <AppDesign/>
                                 </div>
-                                <div className="tab-pane" id="app-build"  aria-labelledby="app-build-tab"></div>
+                                <div className="tab-pane" id="app-build"  aria-labelledby="app-build-tab">
+                                    <AppBuild></AppBuild>
+                                </div>
                                 <div className="tab-pane" id="app-deploy"  aria-labelledby="app-deploy-tab">
                                     <AppDeploy/>
                                 </div>
