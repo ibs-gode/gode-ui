@@ -4,5 +4,6 @@ export const MyConfig = {
     appDesignURI: '/generator/design',
     appBuildUri:'/generator/build',
     appRequirement: '/generator/deploy/requirement',
-    fetchEntityApp: '/artifact/brief'
+    fetchEntityApp: '/artifact/brief',
+    appDeploy: '/generator/deploy'
 };

@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import axios from "axios";
 import {useInput} from "../hooks/input-hook";
 import {MyConfig} from "../config/config";
+import {HandleToastMessage, StatusEnum} from "../common/utils";
 
 const AppDeploy = () => {
 
@@ -30,16 +31,13 @@ const AppDeploy = () => {
 
     const handleRequirementSubmit = (e) => {
         e.preventDefault();
-        //Hardcoding data to test. Need to read value from artifactId and deployType variables
         const data = {
                 "app": {
-                    "name": "CustomerCare",
-                    "version": 2
+                    "artifactId": artifactId
                 },
-                "type": "LOCAL"
+                "type": deployType
             };
         postAppRequirement(data);
-        console.log(JSON.stringify(requirementDataOutput))
 
     };
     const postAppRequirement=(data) =>{
@@ -58,7 +56,7 @@ const AppDeploy = () => {
 
         fetch(MyConfig.apiBaseUrl+ MyConfig.appRequirement,requestOpt).then(response => response.json())
             .then(data => {
-                //console.log("hi"+ JSON.stringify(data))
+                console.log("hi"+ JSON.stringify(data))
                 setRequirementData(data);
             });
     };
@@ -70,8 +68,56 @@ const AppDeploy = () => {
         })
     };
 
+    const handleAppDeploySubmit = (e) => {
+        e.preventDefault();
+        const data = {
+            "app": {
+                "artifactId": artifactId
+            },
+            "localDeploymentRequired": requirementDataOutput,
+            "type": deployType
+        };
+        postAppDeploy(data);
+        console.log(JSON.stringify(requirementDataOutput))
+    };
+
+    const postAppDeploy=(data) =>{
+        const requestOpt ={
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "context": {
+                    "handle": "string"
+                },
+                "data":data})
+        };
+
+        fetch(MyConfig.apiBaseUrl+ MyConfig.appDeploy,requestOpt).then(resp =>{
+            console.log(resp);
+            switch (resp.status) {
+                case 200:
+                    HandleToastMessage("App Deployment successfully triggered",StatusEnum.SUCCESS);
+                    resetDeployType();
+                    refAppSelect.current.value="";
+                    setRequirementData({});
+                    setRequirementDataOutput({});
+                    data = {};
+                    break;
+                case 400:
+                    HandleToastMessage("App Deploy failed",StatusEnum.FAIL);
+                    break;
+                default:
+                    HandleToastMessage("App Deploy failed",StatusEnum.FAIL);
+                    break;
+            }
+        })
+    };
+
     return (
-        <form>
+        <form onSubmit={handleAppDeploySubmit}>
             <div className="form-row ">
                 <div className="form-group col-md-6">
                     <label>App</label><span className="required">*</span>
@@ -97,7 +143,7 @@ const AppDeploy = () => {
                 {
                     Object.keys(requirementData).map((key, i) => (
                         <div key={i} className="form-group col-md-6">
-                            <label>{key}</label>
+                            <label>{requirementData[key]}</label>
                             <input  name={key}  type="text" onChange={bindValue} className="form-control"/>
                         </div>
                     ))
