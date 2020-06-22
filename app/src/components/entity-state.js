@@ -4,7 +4,7 @@ import {useInput} from "../hooks/input-hook";
 
 
 
-const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => {
+const EntityState = ({callbackFromEntityState, isReset}) => {
 
     const refStateChild = useRef();
     const refStateSpan = useRef();
@@ -31,7 +31,7 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
 
     useEffect(
         () => {
-            if (fields.length === 0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")) {
+              if(isReset){
                 resetVolatileEntity();
                 resetAsyncStore();
                 resetAsyncRead();
@@ -42,10 +42,10 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
                 resetTransactional();
                 resetWrite();
                 refState.current.disabled = false;
-            }
+              }
         },
-        [fields, idField, entityState]
-    );
+        [isReset]
+        );
 
     const booleanConvert = (str) => {
         if (str === "True") {
@@ -99,9 +99,8 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
         <div>
             <div>
                 <label>State</label>
-                <button type="submit" onClick={handleSaveState} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save
-                    State
-                </button>
+
+
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" ref={refState}>
                     <div className="form-group row">
                         <div className="col-1">
@@ -190,6 +189,9 @@ const EntityState = ({callbackFromEntityState, fields,idField, entityState}) => 
                             </fieldset>
                         </div>
                     </div>
+                    <button type="submit" onClick={handleSaveState} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save
+                    State
+                </button>
                 </fieldset>
             </div>
         </div>
