@@ -17,6 +17,8 @@ export default class SelectEntityState extends React.Component {
         }
     }
 
+   
+
     componentDidMount(){
         this.fetchEntityData();
     }
@@ -43,6 +45,8 @@ export default class SelectEntityState extends React.Component {
         
     }
 
+    
+
     stateCallBackFunction(data){
         let addedEntitiesArr = [...this.state.addedEntities,{
             entity:this.state.selectedEntity,
@@ -51,11 +55,11 @@ export default class SelectEntityState extends React.Component {
         this.setState({addedEntities: addedEntitiesArr});
         console.log(data);
         this.setState({selectedEntity:{artifactId:""},resetEntityState:true});
-        this.state.resetEntityState=false;
         this.props.callBackFunactionForEntityList(addedEntitiesArr);
+        
 
     }
-
+    
     
 
      saveDependency(event) {
@@ -63,6 +67,7 @@ export default class SelectEntityState extends React.Component {
         var entityName = event.target.options[event.target.selectedIndex].text;
         var entErtifactId = event.target.value;
         this.setState({selectedEntity:{artifactId:entErtifactId, name: entityName}});
+        this.setState({resetEntityState: false});
     };
 
     render(){
@@ -80,7 +85,7 @@ export default class SelectEntityState extends React.Component {
                         }) }
                     </select>
                 </div>
-            <EntityState callbackFromEntityState={this.stateCallBackFunction} isReset={this.state.resetEntityState} ></EntityState>
+            <EntityState callbackFromEntityState={this.stateCallBackFunction} isReset={this.state.resetEntityState} isMultiple={true} ></EntityState>
             
 
                 <table className="table mt-3 border border-info table-striped">
