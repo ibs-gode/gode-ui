@@ -81,7 +81,7 @@ export default class SelectEntityState extends React.Component {
                         <option value="" hidden>Select</option>
                         
                           {entitiesData.map((item,idx) => {
-                            return (<option value={item.artifactId}>{item.label}</option>);
+                            return (<option key={idx} value={item.artifactId}>{item.label}</option>);
                         }) }
                     </select>
                 </div>
