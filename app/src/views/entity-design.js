@@ -85,7 +85,7 @@ const EntityDesign = () => {
     };
 
     const isValidReset=(fields, idField, entityState)=>{
-        if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
+        if(fields.length===0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
             return true;
         }
         else {

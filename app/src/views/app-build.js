@@ -1,6 +1,4 @@
 import React from 'react';
-import EntityList from '../components/entity-list';
-import CustomDropDown from '../components/entity-app-list';
 import SelectEntityState from '../components/select-entity-state';
 import axios from 'axios';
 import { HandleToastMessage, StatusEnum } from '../common/utils';
