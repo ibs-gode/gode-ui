@@ -4,7 +4,7 @@ import {useInput} from "../hooks/input-hook";
 
 
 
-const EntityState = ({callbackFromEntityState, isReset}) => {
+const EntityState = ({callbackFromEntityState, isReset, isMultiple}) => {
 
     const refStateChild = useRef();
     const refStateSpan = useRef();
@@ -31,6 +31,7 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
 
     useEffect(
         () => {
+            
               if(isReset){
                 resetVolatileEntity();
                 resetAsyncStore();
@@ -41,10 +42,12 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
                 resetStoreName();
                 resetTransactional();
                 resetWrite();
-                refState.current.disabled = false;
+                if(isMultiple){
+                    refState.current.disabled = false;
+                }
               }
         },
-        [isReset]
+        [isReset,isMultiple]
         );
 
     const booleanConvert = (str) => {
@@ -91,7 +94,9 @@ const EntityState = ({callbackFromEntityState, isReset}) => {
             }
         }
         callbackFromEntityState(data);
-        refState.current.disabled = true;
+        if(isMultiple){
+            refState.current.disabled = false;
+        }
 
     };
 
