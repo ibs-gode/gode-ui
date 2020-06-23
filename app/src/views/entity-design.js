@@ -28,7 +28,11 @@ const EntityDesign = () => {
 
     const handleEntityDesignSubmit = (e) => {
         e.preventDefault();
-        console.log("nope" + JSON.stringify(data));
+        if (data.idField.properties.includes("ID")) {
+            let index  = data.idField.properties.indexOf("ID");
+            data.idField.properties.splice(index,1);
+        }
+        console.log("Final Entity Design JSON input " + JSON.stringify(data));
         postEntityData(data);
     };
 
@@ -47,7 +51,7 @@ const EntityDesign = () => {
           }
           
         fetch(MyConfig.apiBaseUrl+ MyConfig.createEntityURI,requestOpt).then(resp =>{
-            console.log(resp);
+            console.log("Response from entity creation "+ resp);
             switch (resp.status) {
                 case 200:
                     HandleToastMessage("Entity has been created.",StatusEnum.SUCCESS);
@@ -71,13 +75,12 @@ const EntityDesign = () => {
     }
     
     const entityStateCallback = (dataFromEntityState) => {
-        console.log(JSON.stringify(dataFromEntityState));
+        console.log("Data from entity state" + JSON.stringify(dataFromEntityState));
             setEntityState(dataFromEntityState);
     };
 
     const entityFieldCallback = (dataFromEntityDesign) => {
         if (dataFromEntityDesign.properties.includes("ID")) {
-            console.log("ID is here")
             setIdField(dataFromEntityDesign);
         } else {
             setFields([...fields, dataFromEntityDesign])
@@ -85,7 +88,7 @@ const EntityDesign = () => {
     };
 
     const isValidReset=(fields, idField, entityState)=>{
-        if(fields.length==0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
+        if(fields.length===0 && !idField.hasOwnProperty("type") && !entityState.hasOwnProperty("volatileEntity")){
             return true;
         }
         else {

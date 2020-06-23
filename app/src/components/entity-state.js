@@ -103,13 +103,13 @@ const EntityState = ({callbackFromEntityState, isReset, isMultiple}) => {
     return (
         <div>
             <div>
-                <label>State</label>
-                 
-               
+                <label>State</label><span className="required">*</span>
+
+
                 <fieldset className="form-group border border-secondary pl-3 pt-3 rounded" ref={refState}>
                     <div className="form-group row">
                         <div className="col-1">
-                        <label>Volatile</label><span className="required">*</span>
+                        <label>Volatile</label>
                         </div>
                         <div className=" col-sm-auto pl-1">
                         <select className="form-control form-control-sm "  {...bindVolatileEntity}>
@@ -194,7 +194,7 @@ const EntityState = ({callbackFromEntityState, isReset, isMultiple}) => {
                             </fieldset>
                         </div>
                     </div>
-                    <button type="submit" onClick={handleSaveState} className="btn btn-info btn-sm ml-3 mb-3 mt-3 ">Save
+                    <button type="submit" onClick={handleSaveState} className="btn btn-info btn-sm  mb-3  ">Save
                     State
                 </button>
                 </fieldset>

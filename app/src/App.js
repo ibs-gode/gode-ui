@@ -4,8 +4,6 @@ import './App.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import HomePage from './views/home-page.js'
 import LoadingIndicator from './components/LoadingIndicator';
-import Loader from 'react-loader-spinner';
-import { usePromiseTracker } from "react-promise-tracker";
 
 const App = () => {
     return (

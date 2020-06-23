@@ -68,13 +68,12 @@ const EntityField = ({callbackFromEntity, isReset}) => {
 
     const relationshipCallBack = (dataFromRelationship) => {
         setRelationship(dataFromRelationship);
-        console.log(dataFromRelationship.artifactId)
-        console.log(JSON.stringify(dataFromRelationship));
+        console.log("Relationship data "+JSON.stringify(dataFromRelationship));
     };
 
     const objectCallBack = (dataFromObject) => {
         setObject(dataFromObject);
-        console.log(JSON.stringify(dataFromObject));
+        console.log("Object data " +JSON.stringify(dataFromObject));
     };
 
     const handleAddFieldSubmit = (evt) => {

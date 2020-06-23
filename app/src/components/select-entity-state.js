@@ -75,13 +75,13 @@ export default class SelectEntityState extends React.Component {
        let addedEntitiesData = this.state.addedEntities;
         return(<div className="form-group col-md-12">
              <fieldset className="form-group border border-secondary pl-3 pt-1 rounded">
-             <label>{this.props.label}</label><span className="required">*</span>
+             <label>{this.props.label}</label>
              <div className="form-group mr-3">
                     <select className="form-control" name="artifactId" onChange={this.saveDependency} value={this.state.selectedEntity.artifactId}>
                         <option value="" hidden>Select</option>
                         
                           {entitiesData.map((item,idx) => {
-                            return (<option value={item.artifactId}>{item.label}</option>);
+                            return (<option key={idx} value={item.artifactId}>{item.label}</option>);
                         }) }
                     </select>
                 </div>
