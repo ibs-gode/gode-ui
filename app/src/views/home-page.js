@@ -4,6 +4,7 @@ import EntityDesign from './entity-design'
 import AppDesign from "./app-design";
 import AppBuild from './app-build';
 import AppDeploy from "./app-deploy";
+import ApiDocs from "./api-docs";
 
 const HomePage = () => {
 
@@ -46,7 +47,9 @@ const HomePage = () => {
                                 <div className="tab-pane" id="app-deploy"  aria-labelledby="app-deploy-tab">
                                     <AppDeploy/>
                                 </div>
-                                <div className="tab-pane" id="api-docs" aria-labelledby="api-docs-tab"></div>
+                                <div className="tab-pane" id="api-docs" aria-labelledby="api-docs-tab">
+                                    <ApiDocs/>
+                                </div>
                             </div>
                         </div>
                     </div>

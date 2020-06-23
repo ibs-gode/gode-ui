@@ -1,6 +1,4 @@
 import React from 'react';
-import EntityList from '../components/entity-list';
-import CustomDropDown from '../components/entity-app-list';
 import SelectEntityState from '../components/select-entity-state';
 import axios from 'axios';
 import { HandleToastMessage, StatusEnum } from '../common/utils';
@@ -132,7 +130,7 @@ export default class AppBuild extends React.Component {
         return (
             <form  onSubmit={this.buildAppAction}>
                 <div className="form-row ">
-                    <div className="form-group col-md-12">
+                    <div className="form-group col-md-6">
                         <label>App</label><span className="required">*</span>
                     <select className="form-control"  name="artifactId" onChange={this.handleChange} value={this.state.appObj["artifactId"]}>
                         <option value="" hidden>Select</option>
@@ -147,7 +145,7 @@ export default class AppBuild extends React.Component {
                     <div className="form-row ">
                     <div className="form-group col-md-6">
                         <label>Packaging</label><span className="required">*</span>
-                        <select className="form-control-sm ml-3" onChange={this.handleChange} name ="artifactPackaging" value={this.state.appObj.artifactPackaging}>
+                        <select className="form-control" onChange={this.handleChange} name ="artifactPackaging" value={this.state.appObj.artifactPackaging}>
                             <option value="" hidden>Select</option>
                             <option value="MAVEN">Maven</option>
                             <option value="GRADLE">Gradle</option>
@@ -155,7 +153,7 @@ export default class AppBuild extends React.Component {
                     </div>
                     <div className="form-group col-md-6">
                     <label>Language</label><span className="required">*</span>
-                        <select className="form-control-sm ml-3" onChange={this.handleChange} name ="progLanguage" value={this.state.appObj.progLanguage}>
+                        <select className="form-control" onChange={this.handleChange} name ="progLanguage" value={this.state.appObj.progLanguage}>
                             <option value="" hidden>Select</option>
                             <option value="JAVA">Java</option>
                     
@@ -166,7 +164,7 @@ export default class AppBuild extends React.Component {
                 <div className="form-row ">
                     <div className="form-group col-md-6">
                     <label>Secure</label><span className="required">*</span>
-                        <select className="form-control-sm ml-3" onChange={this.handleChange} name ="secure" value={this.state.appObj.secure}>
+                        <select className="form-control" onChange={this.handleChange} name ="secure" value={this.state.appObj.secure}>
                             <option value="" hidden>Select</option>
                             <option value="True">Yes</option>
                             <option value="False">No</option>
@@ -175,7 +173,7 @@ export default class AppBuild extends React.Component {
                         </div>
                         <div className="form-group col-md-6">
                     <label>System Queue</label><span className="required">*</span>
-                        <select className="form-control-sm ml-3" onChange={this.handleChange} name ="systemQueue" value={this.state.appObj.systemQueue}>
+                        <select className="form-control" onChange={this.handleChange} name ="systemQueue" value={this.state.appObj.systemQueue}>
                             <option value="" hidden>Select</option>
                             <option value="True">Yes</option>
                             <option value="False">No</option>
