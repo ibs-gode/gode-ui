@@ -114,6 +114,9 @@ const AppDeploy = () => {
                     break;
             }
         })
+        //     .then(resp => resp.json()).then(data => {
+        //     console.log("deploy response"+ JSON.stringify(data))
+        // })
     };
 
     return (
