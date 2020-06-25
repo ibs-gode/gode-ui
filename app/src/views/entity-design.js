@@ -54,24 +54,32 @@ const EntityDesign = () => {
             console.log("Response from entity creation "+ resp);
             switch (resp.status) {
                 case 200:
-                    HandleToastMessage("Entity has been created.",StatusEnum.SUCCESS);
-                    resetEntityName();
-                    resetEntityDesc();
-                    resetEntityVersion();
-                    resetEntityArtifactID();
-                    setFields([]);
-                    setIdField({})
-                    setEntityState({});
-                    data = {};
+                    console.log();
+                    return resp.json();
                     break;
-                case 400:
-                    HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
-                    break;
+                
                 default:
-                    HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                    throw new Error(resp);
                     break;
             }
+          }).then(resp =>{
+            if(resp.context.status==="SUCCESS"){
+                HandleToastMessage("Entity has been created.",StatusEnum.SUCCESS);
+                resetEntityName();
+                resetEntityDesc();
+                resetEntityVersion();
+                resetEntityArtifactID();
+                setFields([]);
+                setIdField({})
+                setEntityState({});
+                data = {};
+               
+                } 
+                else{
+                    HandleToastMessage("Entity creation failed.",StatusEnum.FAIL);
+                }
           })
+          .catch(err =>  HandleToastMessage("Entity creation failed.",StatusEnum.FAIL));
     }
     
     const entityStateCallback = (dataFromEntityState) => {
