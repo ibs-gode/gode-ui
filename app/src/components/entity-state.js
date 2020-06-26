@@ -63,6 +63,7 @@ const EntityState = ({callbackFromEntityState, isReset, isMultiple}) => {
     const handleSaveState = (e) => {
         e.preventDefault();
         let data = {};
+        console.log(asyncStore,cached,storeName,asyncRead)
         const entityStateStoreData = {
             asyncStoreSync: booleanConvert(asyncStore),
             cached: booleanConvert(cached),
@@ -80,7 +81,9 @@ const EntityState = ({callbackFromEntityState, isReset, isMultiple}) => {
                 volatileEntity: booleanConvert(volatileEntity)
             };
         } else if (volatileEntity === "False") {
+            console.log("i am inside")
             if (asyncStore === "" && read !== "") {
+                console.log("i am inside 0")
                 data = {
                     opsLevel: opsLevelData,
                     volatileEntity: booleanConvert(volatileEntity)
@@ -93,6 +96,7 @@ const EntityState = ({callbackFromEntityState, isReset, isMultiple}) => {
                 }
             }
         }
+        console.log(data);
         callbackFromEntityState(data);
         if(isMultiple){
             refState.current.disabled = false;

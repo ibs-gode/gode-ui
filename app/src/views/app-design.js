@@ -40,29 +40,37 @@ const AppDesign = () => {
             console.log(resp);
             switch (resp.status) {
                 case 200:
-                    HandleToastMessage("App design has been successful.",StatusEnum.SUCCESS);
-                    resetAppName();
-                    resetAppDesc();
-                    resetAppVersion();
-                    resetAppArtifactID();
-                    resetAppAvailability();
-                    resetAppDistributes();
-                    resetAppScalability();
-                    setEntities([]);
-                    setFunctionItems([]);
-                    setAppDependencies([]);
-                    setFunctionInputs([]);
-                    setFunctionOutputs([]);
-                    data = {};
+                    return resp.json();
                     break;
-                case 400:
-                    HandleToastMessage("App design failed.",StatusEnum.FAIL);
-                    break;
+                
                 default:
-                    HandleToastMessage("App design failed.",StatusEnum.FAIL);
+                    throw new Error(resp);
                     break;
             }
-        })
+          }).then(resp =>{
+            if(resp.context.status==="SUCCESS"){
+                HandleToastMessage("App design has been successful.",StatusEnum.SUCCESS);
+                resetAppName();
+                resetAppDesc();
+                resetAppVersion();
+                resetAppArtifactID();
+                resetAppAvailability();
+                resetAppDistributes();
+                resetAppScalability();
+                setEntities([]);
+                setFunctionItems([]);
+                setAppDependencies([]);
+                setFunctionInputs([]);
+                setFunctionOutputs([]);
+                setResetRequired('YES');
+                
+                data = {};
+                }
+                else{
+                    HandleToastMessage("App design creation failed.",StatusEnum.FAIL);
+                }
+          })
+          .catch(err =>  HandleToastMessage("App design creation failed.",StatusEnum.FAIL));
     };
 
     const dependenciesCallBack = (dataFromEntityList) => {

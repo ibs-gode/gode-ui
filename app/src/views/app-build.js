@@ -18,18 +18,19 @@ export default class AppBuild extends React.Component {
         this.buildAppAction = this.buildAppAction.bind(this);
         this.resetForm = this.resetForm.bind(this);
         this.state ={
-            appObj: Object.assign({}, {artifactPackaging:""}),
+            appObj: Object.assign({}, {artifactPackaging:"",progLanguage:""}),
             errors: {},
             selectedAppData: {},
             appDatas:[] ,
-            entityStorePref:[]           
+            entityStorePref:[]  ,
+            theiaLink:undefined         
         }
         
     }
 
     resetForm(){
         this.setState({
-            appObj: Object.assign({}, {artifactPackaging:""}),
+            appObj: Object.assign({}, {artifactPackaging:"",secure:"",progLanguage:"",systemQueue:""}),
             errors: {},
             selectedAppData: {},
             appDatas:[] ,
@@ -51,13 +52,12 @@ export default class AppBuild extends React.Component {
           return { appObj: prevState.appObj };
         });
       }
-    componentDidMount(){
-        this.fetchAppData();
-    }
+    
 
     
 
    async fetchAppData(){
+       this.setState({theiaLink:undefined})
         const response = await axios(
             'http://localhost:9001/artifact/brief?type=APP',
         );
@@ -109,19 +109,28 @@ export default class AppBuild extends React.Component {
             console.log(resp);
             switch (resp.status) {
                 case 200:
+                    return resp.json();    
+                break;
+                
+                    default:
+                        this.setState({theiaLink:undefined})
+                        throw new Error(resp);
+                        break;
+                }
+              }).then(resp =>{
+                if(resp.context.status==="SUCCESS"){
                     HandleToastMessage("App has been build.",StatusEnum.SUCCESS);
                     this.resetForm()
                     data = {};
-                    break;
-                case 400:
-                    HandleToastMessage("App build failed.",StatusEnum.FAIL);
-                    break;
-                default:
-                    HandleToastMessage("App build failed.",StatusEnum.FAIL);
-                    break;
-            }
-          })
-          );    
+                    this.setState({theiaLink:resp.data.editUrl})
+                }
+                    else{
+                        HandleToastMessage("App build failed.",StatusEnum.FAIL);
+                        this.setState({theiaLink:undefined})
+                    }
+              })
+              .catch(err =>  HandleToastMessage("App build failed.",StatusEnum.FAIL))
+          ); 
 
     }
     
@@ -132,7 +141,7 @@ export default class AppBuild extends React.Component {
                 <div className="form-row ">
                     <div className="form-group col-md-6">
                         <label>App</label><span className="required">*</span>
-                    <select className="form-control"  name="artifactId" onChange={this.handleChange} value={this.state.appObj["artifactId"]}>
+                    <select className="form-control"  name="artifactId" onClick={this.fetchAppData} onChange={this.handleChange} value={this.state.appObj["artifactId"]}>
                         <option value="" hidden>Select</option>
                         
                           {this.state.appDatas.map((item,idx) => {
@@ -188,6 +197,15 @@ export default class AppBuild extends React.Component {
                 <button type="submit"
                         className="btn btn-primary  font-weight-bold float-right mb-3 mr-3">Build App
                 </button>
+                <div className="form-row ">
+                    <br></br>
+                
+                        <br></br>
+                        <br></br>
+                    
+                    </div>
+                {this.state.theiaLink!=undefined ? <a target="_blank" className="btn btn-primary text-light  font-weight-bold float-right mb-3 mr-3 " href={this.state.theiaLink}>Open build code in cloud IDE</a>: null}
+                
             </form>
         );
     }

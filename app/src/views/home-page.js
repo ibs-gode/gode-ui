@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Notifications from "react-notify-toast";
 import EntityDesign from './entity-design'
 import AppDesign from "./app-design";
@@ -7,7 +7,11 @@ import AppDeploy from "./app-deploy";
 import ApiDocs from "./api-docs";
 
 const HomePage = () => {
-
+    const [deployMonitorData, setDeployMonitorData] = useState({});
+    const handleApiDocData= (data) => {
+        console.log(data)
+            setDeployMonitorData(data);
+    }
         return (
             <div>
                 <Notifications/>
@@ -45,10 +49,10 @@ const HomePage = () => {
                                     <AppBuild></AppBuild>
                                 </div>
                                 <div className="tab-pane" id="app-deploy"  aria-labelledby="app-deploy-tab">
-                                    <AppDeploy/>
+                                    <AppDeploy handleCallBack={handleApiDocData}/>
                                 </div>
                                 <div className="tab-pane" id="api-docs" aria-labelledby="api-docs-tab">
-                                    <ApiDocs/>
+                                    <ApiDocs deployMonitorData={deployMonitorData}/>
                                 </div>
                             </div>
                         </div>

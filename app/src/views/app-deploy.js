@@ -4,7 +4,7 @@ import {useInput} from "../hooks/input-hook";
 import {MyConfig} from "../config/config";
 import {HandleToastMessage, StatusEnum} from "../common/utils";
 
-const AppDeploy = () => {
+const AppDeploy = (props) => {
 
     const refAppSelect = useRef();
     const [dataList, setDataList] = useState([]);
@@ -99,21 +99,29 @@ const AppDeploy = () => {
             console.log(resp);
             switch (resp.status) {
                 case 200:
+                return resp.json();    
+                break;
+                
+                    default:
+                        throw new Error(resp);
+                        break;
+                }
+              }).then(resp =>{
+                if(resp.context.status==="SUCCESS"){
                     HandleToastMessage("App Deployment successfully triggered",StatusEnum.SUCCESS);
                     resetDeployType();
                     refAppSelect.current.value="";
                     setRequirementData({});
                     setRequirementDataOutput({});
-                    data = {};
-                    break;
-                case 400:
-                    HandleToastMessage("App Deploy failed",StatusEnum.FAIL);
-                    break;
-                default:
-                    HandleToastMessage("App Deploy failed",StatusEnum.FAIL);
-                    break;
-            }
-        })
+                    data = resp.data;
+                    props.handleCallBack(data);
+                    }
+                    else{
+                        HandleToastMessage("App Deployment creation failed.",StatusEnum.FAIL);
+                    }
+              })
+              .catch(err =>  HandleToastMessage("App Deploy failed",StatusEnum.FAIL));
+                
         //     .then(resp => resp.json()).then(data => {
         //     console.log("deploy response"+ JSON.stringify(data))
         // })
